@@ -21,4 +21,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
   spec.add_development_dependency "minitest"
   spec.add_development_dependency "minitest-rg"
+  spec.add_development_dependency "faraday_middleware", "< 0.9.0"
+  spec.add_development_dependency "json", "~> 1.8.1"
+  spec.add_development_dependency "webmock", "< 1.16"
+  spec.add_development_dependency "mocha", "~> 1.0.0"
+  spec.add_development_dependency "excon", ">= 0.27.5"
 end

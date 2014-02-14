@@ -1,5 +1,6 @@
 require './spec/minitest_helper'
 
+require 'data_services_api'
 require 'data_services_api/service'
 
 describe "DataServicesAPI", "the data services API" do
