@@ -10,7 +10,13 @@ module DataServicesApi
     end
 
     def datasets
-      get_json( url + "/dataset" ).map {|json| Dataset.new( json )}
+      get_json( "#{url}/dataset" ).map {|json| Dataset.new( json )}
+    end
+
+    def dataset( name )
+      raise "Dataset name is required" unless name
+      json = get_json( "#{url}/dataset/#{name}" )
+      json && Dataset.new( json )
     end
 
     private

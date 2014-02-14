@@ -6,12 +6,12 @@ require 'data_services_api/dataset'
 
 describe "DataServicesAPI::Service", vcr: true do
   before do
-    VCR.insert_cassette :service_spec
+    VCR.insert_cassette name
     @service = DataServicesApi::Service.new
   end
 
   after do
-    VCR.eject_cassette :service_spec
+    VCR.eject_cassette
   end
 
 
@@ -26,6 +26,11 @@ describe "DataServicesAPI::Service", vcr: true do
       dataset.must_respond_to :id
       dataset.id.wont_be_nil
     end
+  end
+
+  it "should find a dataset by name" do
+    dataset = @service.dataset( "hpi" )
+    dataset.id.must_equal "hpi"
   end
 
 end

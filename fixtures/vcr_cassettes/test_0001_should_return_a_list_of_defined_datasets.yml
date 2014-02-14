@@ -27,7 +27,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Fri, 14 Feb 2014 17:13:26 GMT
+      - Fri, 14 Feb 2014 17:47:39 GMT
     body:
       encoding: UTF-8
       string: "[ { \n  \"@id\" : \"hpi\" ,\n  \"uri\" : \"http://www.epimorphics.com/test/dsapi/hpi#hpi\"
@@ -36,5 +36,5 @@ http_interactions:
         ,\n  \"structure-api\" : \"/dsapi/dataset/hpi/structure\" ,\n  \"dev-api\"
         : \"/dsapi/dataset/hpi/dev\"\n}\n ]\n"
     http_version: 
-  recorded_at: Fri, 14 Feb 2014 17:13:26 GMT
+  recorded_at: Fri, 14 Feb 2014 17:47:39 GMT
 recorded_with: VCR 2.8.0
