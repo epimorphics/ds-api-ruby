@@ -10,19 +10,25 @@ module DataServicesApi
     end
 
     def datasets
-      get_json( "#{url}/dataset" ).map {|json| Dataset.new( json )}
+      api_get_json( "/dataset" ).map {|json| Dataset.new( json, self )}
     end
 
     def dataset( name )
       raise "Dataset name is required" unless name
-      json = get_json( "#{url}/dataset/#{name}" )
-      json && Dataset.new( json )
+      json = api_get_json( "/dataset/#{name}" )
+      json && Dataset.new( json, self )
+    end
+
+    def api_get_json( api, options = {} )
+      # TODO remove temp hack when we resolve issue with API URL settings
+      a = api.gsub( /^\/dsapi/, "" )
+      get_json( "#{url}#{a}", options )
     end
 
     private
 
     # Get parsed JSON from the given URL
-    def get_json( http_url, options = {} )
+    def get_json( http_url, options )
       response = get_from_api( http_url, options )
       JSON.parse( response.body )
     end

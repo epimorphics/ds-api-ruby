@@ -1,0 +1,40 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:8080/dsapi/dataset/hpi
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.9
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - Apache-Coyote/1.1
+      Vary:
+      - accept
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Fri, 14 Feb 2014 18:19:08 GMT
+    body:
+      encoding: UTF-8
+      string: "{ \n  \"@id\" : \"hpi\" ,\n  \"uri\" : \"http://www.epimorphics.com/test/dsapi/hpi#hpi\"
+        ,\n  \"label\" : \"House price index\" ,\n  \"description\" : \"A Data Cube
+        of house price index data from Land Registry\" ,\n  \"data-api\" : \"/dsapi/dataset/hpi/data\"
+        ,\n  \"structure-api\" : \"/dsapi/dataset/hpi/structure\" ,\n  \"dev-api\"
+        : \"/dsapi/dataset/hpi/dev\"\n}\n\n"
+    http_version: 
+  recorded_at: Fri, 14 Feb 2014 18:19:08 GMT
+recorded_with: VCR 2.8.0
