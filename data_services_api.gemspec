@@ -26,4 +26,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "webmock", "< 1.16"
   spec.add_development_dependency "mocha", "~> 1.0.0"
   spec.add_development_dependency "excon", ">= 0.27.5"
+  spec.add_development_dependency "json_expressions", "~> 0.8.2"
 end

@@ -9,6 +9,7 @@ require 'webmock'
 require "minitest/autorun"
 require "minispec-metadata"
 require 'minitest/rg'
+require 'json_expressions/minitest'
 
 require "webmock"
 require "mocha/setup"
