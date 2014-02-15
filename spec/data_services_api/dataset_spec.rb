@@ -43,4 +43,11 @@ describe "DataServiceApi::Dataset" do
     @dataset.service.wont_be_nil
     @dataset.service.url.wont_be_nil
   end
+
+  it "should accept a query and return the result" do
+    query = {"hpi:refRegionName" => {"@eq" => "Somerset"}}
+    json = @dataset.query( query )
+    json.wont_be_nil
+    json.size.must_be :>, 0
+  end
 end

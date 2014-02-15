@@ -31,5 +31,9 @@ module DataServicesApi
         @structure = aspects.map {|json| Aspect.new( json, service )}
       end
     end
+
+    def query( query )
+      service.api_post_json( data_api, query.to_json )
+    end
   end
 end

@@ -23,7 +23,7 @@ describe "DataServiceApi::QueryGenerator" do
   end
 
   it "should allow adding an equality clause" do
-    pattern = {foo: {eq: "bar"}}
+    pattern = {foo: {"@eq" => "bar"}}
 
     query = DataServicesApi::QueryGenerator.new
               .equals( "foo", "bar" )

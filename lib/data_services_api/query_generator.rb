@@ -13,7 +13,7 @@ module DataServicesApi
     end
 
     def equals( attribute, value )
-      QueryGenerator.new( @terms.merge( {attribute => {eq: value}} ))
+      QueryGenerator.new( @terms.merge( {attribute => {"@eq" => value}} ))
     end
   end
 end
