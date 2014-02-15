@@ -15,9 +15,19 @@ describe "DataServiceApi::QueryGenerator" do
     VCR.eject_cassette
   end
 
-  it "start with an empty query" do
+  it "should start with an empty query" do
     pattern = {}
     query = DataServicesApi::QueryGenerator.new
+    query.to_json.wont_be_nil
+    query.to_json.must_match_json_expression pattern
+  end
+
+  it "should allow adding an equality clause" do
+    pattern = {foo: {eq: "bar"}}
+
+    query = DataServicesApi::QueryGenerator.new
+              .equals( "foo", "bar" )
+
     query.to_json.wont_be_nil
     query.to_json.must_match_json_expression pattern
   end
