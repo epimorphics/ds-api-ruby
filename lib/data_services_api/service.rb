@@ -20,15 +20,11 @@ module DataServicesApi
     end
 
     def api_get_json( api, options = {} )
-      # TODO remove temp hack when we resolve issue with API URL settings
-      a = api.gsub( /^\/dsapi/, "" )
-      get_json( "#{url}#{a}", options )
+      get_json( as_http_api( api ), options )
     end
 
     def api_post_json( api, json )
-      # TODO remove temp hack when we resolve issue with API URL settings
-      a = api.gsub( /^\/dsapi/, "" )
-      post_json( "#{url}#{a}", json )
+      post_json( as_http_api( api ), json )
     end
 
     private
@@ -91,6 +87,10 @@ module DataServicesApi
         if defined?( Rails )
           faraday.response :logger, Rails.logger
         end
+    end
+
+    def as_http_api( api )
+      api.start_with?( "http:" ) ? api : "#{url}#{api}"
     end
 
   end

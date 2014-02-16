@@ -27,16 +27,16 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Sat, 15 Feb 2014 12:35:17 GMT
+      - Sun, 16 Feb 2014 11:17:27 GMT
     body:
       encoding: UTF-8
-      string: "{ \n  \"@id\" : \"hpi\" ,\n  \"uri\" : \"http://www.epimorphics.com/test/dsapi/hpi#hpi\"
-        ,\n  \"label\" : \"House price index\" ,\n  \"description\" : \"A Data Cube
-        of house price index data from Land Registry\" ,\n  \"data-api\" : \"/dsapi/dataset/hpi/data\"
-        ,\n  \"structure-api\" : \"/dsapi/dataset/hpi/structure\" ,\n  \"dev-api\"
-        : \"/dsapi/dataset/hpi/dev\"\n}\n\n"
+      string: "{ \n  \"@id\" : \"http://www.epimorphics.com/test/dsapi/hpi#hpi\" ,\n
+        \ \"name\" : \"hpi\" ,\n  \"label\" : \"House price index\" ,\n  \"description\"
+        : \"A Data Cube of house price index data from Land Registry\" ,\n  \"data-api\"
+        : \"http://localhost:8080/dsapi/dataset/hpi/data\" ,\n  \"structure-api\"
+        : \"http://localhost:8080/dsapi/dataset/hpi/structure\"\n}\n\n"
     http_version: 
-  recorded_at: Sat, 15 Feb 2014 12:35:17 GMT
+  recorded_at: Sun, 16 Feb 2014 11:17:28 GMT
 - request:
     method: post
     uri: http://localhost:8080/dsapi/dataset/hpi/data
@@ -66,7 +66,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Sat, 15 Feb 2014 12:35:17 GMT
+      - Sun, 16 Feb 2014 11:17:29 GMT
     body:
       encoding: UTF-8
       string: "[\n{ \n  \"hpi:averagePricesSA\" : 61513.254563534669 ,\n  \"hpi:averagePricesSASM\"
@@ -1863,5 +1863,5 @@ http_interactions:
         : \"http://landregistry.data.gov.uk/data/hpi/region/Somerset/month/2007-04\"
         }\n}\n]\n"
     http_version: 
-  recorded_at: Sat, 15 Feb 2014 12:35:18 GMT
+  recorded_at: Sun, 16 Feb 2014 11:17:29 GMT
 recorded_with: VCR 2.8.0

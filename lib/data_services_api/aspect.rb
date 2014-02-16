@@ -11,6 +11,8 @@ module DataServicesApi
       @json["@id"]
     end
 
+    alias :uri :id
+
     def method_missing( name )
       @json[name.to_s]
     end

@@ -30,7 +30,7 @@ describe "DataServicesAPI::Service", vcr: true do
 
   it "should find a dataset by name" do
     dataset = @service.dataset( "hpi" )
-    dataset.id.must_equal "hpi"
+    dataset.id.must_equal "http://www.epimorphics.com/test/dsapi/hpi#hpi"
   end
 
 end

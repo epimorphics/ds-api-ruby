@@ -16,21 +16,25 @@ describe "DataServiceApi::Aspect" do
     VCR.eject_cassette
   end
 
-  it "should have an id" do
-    @aspect1.id.wont_be_nil
-    @aspect1.id.wont_match( /^http:/ )
+  it "should have a name" do
+    @aspect1.name.wont_be_nil
+    @aspect1.name.wont_match( /^http:/ )
   end
 
   it "should have a URI" do
     @aspect1.uri.must_match /^http:/
   end
 
+  it "should have an ID" do
+    @aspect1.id.must_match /^http:/
+  end
+
   it "should have a label" do
-    @aspect1.label.must_match /^Smoothed/
+    @aspect1.label.must_match /.+/
   end
 
   it "should have a description" do
-    @aspect1.description.must_match /^Smoothed/
+    @aspect1.description.must_match /.+/
   end
 
   it "should not be optional" do
