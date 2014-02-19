@@ -17,14 +17,17 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.5"
+  spec.add_dependency "faraday_middleware", "< 0.9.0"
+  spec.add_dependency "json", "~> 1.8.0"
+
+  spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
-  spec.add_development_dependency "minitest", "~> 0.4"
+  spec.add_development_dependency "minitest" "~> 4.7"
   spec.add_development_dependency "minitest-rg"
-  spec.add_development_dependency "faraday_middleware", "< 0.9"
-  spec.add_development_dependency "json", "~> 1.8"
-  spec.add_development_dependency "webmock", "< 1.16"
-  spec.add_development_dependency "mocha", "~> 1.0"
-  spec.add_development_dependency "excon", ">= 0.27"
-  spec.add_development_dependency "json_expressions", "~> 0.8"
+  spec.add_development_dependency "webmock"
+  spec.add_development_dependency "mocha"
+  spec.add_development_dependency "excon"
+  spec.add_development_dependency "json_expressions"
+  spec.add_development_dependency "vcr"
+  spec.add_development_dependency "minitest-vcr"
 end
