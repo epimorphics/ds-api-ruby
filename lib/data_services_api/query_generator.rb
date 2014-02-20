@@ -32,6 +32,17 @@ module DataServicesApi
       relational( "@lt", attribute, value )
     end
 
+    def sort( up_or_down, attribute )
+      raise "Unexpected sort order: #{up_or_down}" unless [:up, :down].include?( up_or_down )
+
+      sort = (@terms["@sort"] || []) << {"@#{up_or_down}" => attribute}
+      QueryGenerator.new( @terms.merge( {"@sort" => sort} ) )
+    end
+
+    def search( pattern )
+      QueryGenerator.new( @terms.merge( {"@search" => pattern} ) )
+    end
+
     private
 
     def relational( rel, attribute, value )

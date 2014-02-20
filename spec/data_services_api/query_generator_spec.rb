@@ -41,4 +41,14 @@ describe "DataServiceApi::QueryGenerator" do
     query.lt( "foo", 1 ).to_json.must_match_json_expression( {foo: {"@lt" => 1}} )
   end
 
+  it "should allow sorting to specified" do
+    query = DataServicesApi::QueryGenerator.new
+    query.sort( :up, "foo" ).to_json.must_match_json_expression( {"@sort" => [{"@up" => "foo"}]} )
+    query.sort( :up, "foo" ).sort( :down, "bar" ).to_json.must_match_json_expression( {"@sort" => [{"@up" => "foo"}, {"@down" => "bar"}]} )
+  end
+
+  it "should allow a text search option to be added" do
+    query = DataServicesApi::QueryGenerator.new
+    query.search( "foo" ).to_json.must_match_json_expression( {"@search" => "foo"} )
+  end
 end
