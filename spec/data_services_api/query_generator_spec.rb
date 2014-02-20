@@ -32,4 +32,13 @@ describe "DataServiceApi::QueryGenerator" do
     query.to_json.must_match_json_expression pattern
   end
 
+  it "should allow adding a relational operator clause" do
+    query = DataServicesApi::QueryGenerator.new
+
+    query.ge( "foo", 1 ).to_json.must_match_json_expression( {foo: {"@ge" => 1}} )
+    query.gt( "foo", 1 ).to_json.must_match_json_expression( {foo: {"@gt" => 1}} )
+    query.le( "foo", 1 ).to_json.must_match_json_expression( {foo: {"@le" => 1}} )
+    query.lt( "foo", 1 ).to_json.must_match_json_expression( {foo: {"@lt" => 1}} )
+  end
+
 end

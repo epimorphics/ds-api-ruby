@@ -13,7 +13,30 @@ module DataServicesApi
     end
 
     def equals( attribute, value )
-      QueryGenerator.new( @terms.merge( {attribute => {"@eq" => value}} ))
+      relational( "@eq", attribute, value )
     end
+
+    def ge( attribute, value )
+      relational( "@ge", attribute, value )
+    end
+
+    def gt( attribute, value )
+      relational( "@gt", attribute, value )
+    end
+
+    def le( attribute, value )
+      relational( "@le", attribute, value )
+    end
+
+    def lt( attribute, value )
+      relational( "@lt", attribute, value )
+    end
+
+    private
+
+    def relational( rel, attribute, value )
+      QueryGenerator.new( @terms.merge( {attribute => {rel => value}} ))
+    end
+
   end
 end
