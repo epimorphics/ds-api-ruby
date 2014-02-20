@@ -26,7 +26,7 @@ describe "DataServiceApi::QueryGenerator" do
     pattern = {foo: {"@eq" => "bar"}}
 
     query = DataServicesApi::QueryGenerator.new
-              .equals( "foo", "bar" )
+              .eq( "foo", "bar" )
 
     query.to_json.wont_be_nil
     query.to_json.must_match_json_expression pattern

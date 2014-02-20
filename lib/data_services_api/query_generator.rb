@@ -12,7 +12,7 @@ module DataServicesApi
       @terms.to_json
     end
 
-    def equals( attribute, value )
+    def eq( attribute, value )
       relational( "@eq", attribute, value )
     end
 
