@@ -59,6 +59,6 @@ describe "DataServiceApi::QueryGenerator" do
     query.le( "foo", 10 )
          .ge( "foo", 1 )
          .to_json
-         .must_match_json_expression( {foo: [{"@ge" => 1}, {"@le" => 10}]} )
+         .must_match_json_expression( {foo: {"@ge" => 1,"@le" => 10}} )
   end
 end
