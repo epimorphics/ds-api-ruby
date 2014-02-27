@@ -5,6 +5,7 @@ require 'data_services_api/service'
 require 'data_services_api/dataset'
 require 'data_services_api/aspect'
 require 'data_services_api/query_generator'
+require 'pry'
 
 describe "DataServiceApi::QueryGenerator" do
   before do
@@ -50,5 +51,14 @@ describe "DataServiceApi::QueryGenerator" do
   it "should allow a text search option to be added" do
     query = DataServicesApi::QueryGenerator.new
     query.search( "foo" ).to_json.must_match_json_expression( {"@search" => "foo"} )
+  end
+
+  it "should allow a range to be specified" do
+    query = DataServicesApi::QueryGenerator.new
+
+    query.le( "foo", 10 )
+         .ge( "foo", 1 )
+         .to_json
+         .must_match_json_expression( {foo: [{"@ge" => 1}, {"@le" => 10}]} )
   end
 end

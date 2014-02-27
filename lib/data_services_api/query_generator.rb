@@ -46,7 +46,12 @@ module DataServicesApi
     private
 
     def relational( rel, attribute, value )
-      QueryGenerator.new( @terms.merge( {attribute => {rel => value}} ))
+      term = {rel => value}
+      if @terms[attribute]
+        a = @terms[attribute]
+        term = (a.is_a?( Array ) ? a : [a]).push( term )
+      end
+      QueryGenerator.new( @terms.merge( {attribute => term} ))
     end
 
   end
