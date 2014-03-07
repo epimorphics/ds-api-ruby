@@ -50,4 +50,11 @@ describe "DataServiceApi::Dataset" do
     json.wont_be_nil
     json.size.must_be :>, 0
   end
+
+  it "should accept a URI and return an RDF description" do
+    uri = "http://landregistry.data.gov.uk/id/region/south-east"
+    json = @dataset.describe( uri )
+    json.wont_be_nil
+    json["within"].must_equal "http://landregistry.data.gov.uk/id/region/england-and-wales"
+  end
 end
