@@ -25,8 +25,12 @@ module DataServicesApi
     end
 
     def describe_api
+      @json["describe-api"]
+    end
+
+    def explain_api
       # TODO there should be a HATEOS-style reference to this endpoint
-      structure_api.gsub( /structure$/, "describe" )
+      structure_api.gsub( /structure$/, "explain" )
     end
 
     def structure
@@ -43,6 +47,10 @@ module DataServicesApi
 
     def describe( uri )
       service.api_get_json( describe_api, {uri: uri} )
+    end
+
+    def explain( query )
+      service.api_post_json( explain_api, query.to_json )
     end
   end
 end
