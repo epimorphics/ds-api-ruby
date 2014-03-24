@@ -38,7 +38,7 @@ describe "DataServiceApi::Aspect" do
   end
 
   it "should not be optional" do
-    @aspect1.optional?.must_equal false
+    @aspect1.optional?.must_equal true
   end
 
   it "should not be multi-valued" do
@@ -46,7 +46,7 @@ describe "DataServiceApi::Aspect" do
   end
 
   it "should have a range type" do
-    @aspect1.range_type.must_equal "http://www.w3.org/2001/XMLSchema#float"
+    @aspect1.range_type.must_match /http:\/\/www.w3.org\/2001\/XMLSchema#/
   end
 
   it "should have a reference to the service object" do
