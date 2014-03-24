@@ -43,6 +43,18 @@ module DataServicesApi
       QueryGenerator.new( @terms.merge( {"@search" => pattern} ) )
     end
 
+    def search_property( property, pattern )
+      QueryGenerator.new( @terms.merge( {"@search" => {"@value" => pattern, "@property" => property}} ) )
+    end
+
+    def search_aspect( aspect, pattern )
+      QueryGenerator.new( @terms.merge( {aspect => {"@search" => pattern}} ) )
+    end
+
+    def search_aspect_property( aspect, property, pattern )
+      QueryGenerator.new( @terms.merge( {aspect => {"@search" => {"@value" => pattern, "@property" => property}}} ) )
+    end
+
     private
 
     def relational( rel, attribute, value )

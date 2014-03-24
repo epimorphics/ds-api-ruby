@@ -48,11 +48,6 @@ describe "DataServiceApi::QueryGenerator" do
     query.sort( :up, "foo" ).sort( :down, "bar" ).to_json.must_match_json_expression( {"@sort" => [{"@up" => "foo"}, {"@down" => "bar"}]} )
   end
 
-  it "should allow a text search option to be added" do
-    query = DataServicesApi::QueryGenerator.new
-    query.search( "foo" ).to_json.must_match_json_expression( {"@search" => "foo"} )
-  end
-
   it "should allow a range to be specified" do
     query = DataServicesApi::QueryGenerator.new
 
@@ -61,4 +56,33 @@ describe "DataServiceApi::QueryGenerator" do
          .to_json
          .must_match_json_expression( {foo: {"@ge" => 1,"@le" => 10}} )
   end
+
+  it "should allow a text search option to be added" do
+    query = DataServicesApi::QueryGenerator.new
+    query.search( "foo" )
+         .to_json
+         .must_match_json_expression( {"@search" => "foo"} )
+  end
+
+  it "should allow a text search against a specific property to be added" do
+    query = DataServicesApi::QueryGenerator.new
+    query.search_property( "foo:bar", "foo" )
+         .to_json
+         .must_match_json_expression( {"@search" => {"@value" => "foo", "@property" => "foo:bar"}} )
+  end
+
+  it "should allow a text search against a specific aspect to be added" do
+    query = DataServicesApi::QueryGenerator.new
+    query.search_aspect( "foo:aspect", "foo" )
+         .to_json
+         .must_match_json_expression( {"foo:aspect" => {"@search" => "foo"}} )
+  end
+
+  it "should allow a text search against a specific property of an aspect to be added" do
+    query = DataServicesApi::QueryGenerator.new
+    query.search_aspect_property( "foo:aspect", "foo:bar", "foo" )
+         .to_json
+         .must_match_json_expression( {"foo:aspect" => {"@search" => {"@value" => "foo", "@property" => "foo:bar"}}} )
+  end
+
 end
