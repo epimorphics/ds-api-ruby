@@ -85,4 +85,19 @@ describe "DataServiceApi::QueryGenerator" do
          .must_match_json_expression( {"foo:aspect" => {"@search" => {"@value" => "foo", "@property" => "foo:bar"}}} )
   end
 
+  it "should allow an arbitrary relational operator to be added" do
+    query = DataServicesApi::QueryGenerator.new
+    query.op( :le, :foo, 1000 )
+         .op( "@ge", :foo, 100 )
+         .to_json
+         .must_match_json_expression( {foo: {"@ge" => 100,"@le" => 1000}} )
+  end
+
+  it "should reject an unknown relational operator" do
+    proc {
+      query = DataServicesApi::QueryGenerator.new
+      query.op( :le, :foo, 1000 )
+    }.must_raise NameError
+  end
+
 end
