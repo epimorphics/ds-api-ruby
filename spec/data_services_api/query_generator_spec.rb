@@ -96,7 +96,7 @@ describe "DataServiceApi::QueryGenerator" do
   it "should reject an unknown relational operator" do
     proc {
       query = DataServicesApi::QueryGenerator.new
-      query.op( :le, :foo, 1000 )
+      query.op( :range, :foo, 1000 )
     }.must_raise NameError
   end
 

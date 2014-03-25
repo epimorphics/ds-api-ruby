@@ -32,6 +32,12 @@ module DataServicesApi
       relational( "@lt", attribute, value )
     end
 
+    def op( op, attribute, value )
+      op = op.is_a?( Symbol ) ? "@#{op}" : op
+      raise NameError.new( "Unrecognised operation #{op}" ) unless %w(@eq @ge @gt @le @lt).include?( op )
+      relational( op, attribute, value )
+    end
+
     def sort( up_or_down, attribute )
       raise "Unexpected sort order: #{up_or_down}" unless [:up, :down].include?( up_or_down )
 
