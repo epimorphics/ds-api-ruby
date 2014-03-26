@@ -57,6 +57,21 @@ describe "DataServiceApi::QueryGenerator" do
          .must_match_json_expression( {foo: {"@ge" => 1,"@le" => 10}} )
   end
 
+  it "should allow an arbitrary relational operator to be added" do
+    query = DataServicesApi::QueryGenerator.new
+    query.op( :le, :foo, 1000 )
+         .op( "@ge", :foo, 100 )
+         .to_json
+         .must_match_json_expression( {foo: {"@ge" => 100,"@le" => 1000}} )
+  end
+
+  it "should reject an unknown relational operator" do
+    proc {
+      query = DataServicesApi::QueryGenerator.new
+      query.op( :range, :foo, 1000 )
+    }.must_raise NameError
+  end
+
   it "should allow a text search option to be added" do
     query = DataServicesApi::QueryGenerator.new
     query.search( "foo" )
@@ -85,19 +100,15 @@ describe "DataServiceApi::QueryGenerator" do
          .must_match_json_expression( {"foo:aspect" => {"@search" => {"@value" => "foo", "@property" => "foo:bar"}}} )
   end
 
-  it "should allow an arbitrary relational operator to be added" do
+  it "should allow a simple boolean expression to be added" do
     query = DataServicesApi::QueryGenerator.new
-    query.op( :le, :foo, 1000 )
-         .op( "@ge", :foo, 100 )
+    query.eq_any_uri( "foo:aspect", ["foo:bar", "foo:bam"] )
          .to_json
-         .must_match_json_expression( {foo: {"@ge" => 100,"@le" => 1000}} )
-  end
+         .must_match_json_expression( {"foo:aspect" => {"@or" => [{"@eq" => {"@id" => "foo:bar"}}, {"@eq" => {"@id" => "foo:bam"}} ]}} )
 
-  it "should reject an unknown relational operator" do
-    proc {
-      query = DataServicesApi::QueryGenerator.new
-      query.op( :range, :foo, 1000 )
-    }.must_raise NameError
+    query.eq_any_value( "foo:aspect", ["foo:bar", "foo:bam"] )
+         .to_json
+         .must_match_json_expression( {"foo:aspect" => {"@or" => [{"@eq" => {"@value" => "foo:bar"}}, {"@eq" => {"@value" => "foo:bam"}} ]}} )
   end
 
 end

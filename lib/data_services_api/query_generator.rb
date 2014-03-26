@@ -16,6 +16,14 @@ module DataServicesApi
       relational( "@eq", attribute, value )
     end
 
+    def eq_any_uri( attribute, uris )
+      eq_any( attribute, uris, "@id" )
+    end
+
+    def eq_any_value( attribute, values )
+      eq_any( attribute, values, "@value" )
+    end
+
     def ge( attribute, value )
       relational( "@ge", attribute, value )
     end
@@ -70,6 +78,12 @@ module DataServicesApi
       end
       QueryGenerator.new( @terms.merge( {attribute => term} ))
     end
+
+    def eq_any( attribute, values, value_type )
+      eq_clauses = values.map {|v| {"@eq" => {value_type => v}} }
+      QueryGenerator.new( @terms.merge( {attribute => {"@or" => eq_clauses}} ) )
+    end
+
 
   end
 end
