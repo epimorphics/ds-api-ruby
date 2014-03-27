@@ -111,4 +111,12 @@ describe "DataServiceApi::QueryGenerator" do
          .must_match_json_expression( {"foo:aspect" => {"@oneof" => [{"@value" => "foo:bar"}, {"@value" => "foo:bam"} ]}} )
   end
 
+  it "should allow a type to be specified for a boolean expression value" do
+    query = DataServicesApi::QueryGenerator.new
+    query.eq_any_value( "foo:aspect", ["foo:bar", "foo:bam"], {type: "xsd:coconut"} )
+         .to_json
+         .must_match_json_expression( {"foo:aspect" => {"@oneof" => [{"@value" => "foo:bar", "@type" => "xsd:coconut"},
+                                                                     {"@value" => "foo:bam", "@type" => "xsd:coconut"} ]}} )
+
+  end
 end
