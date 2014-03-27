@@ -80,8 +80,8 @@ module DataServicesApi
     end
 
     def eq_any( attribute, values, value_type )
-      eq_clauses = values.map {|v| {"@eq" => {value_type => v}} }
-      QueryGenerator.new( @terms.merge( {attribute => {"@or" => eq_clauses}} ) )
+      eq_clauses = values.map {|v| {value_type => v} }
+      QueryGenerator.new( @terms.merge( {attribute => {"@oneof" => eq_clauses}} ) )
     end
 
 

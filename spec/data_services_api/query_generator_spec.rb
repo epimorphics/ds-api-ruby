@@ -104,11 +104,11 @@ describe "DataServiceApi::QueryGenerator" do
     query = DataServicesApi::QueryGenerator.new
     query.eq_any_uri( "foo:aspect", ["foo:bar", "foo:bam"] )
          .to_json
-         .must_match_json_expression( {"foo:aspect" => {"@or" => [{"@eq" => {"@id" => "foo:bar"}}, {"@eq" => {"@id" => "foo:bam"}} ]}} )
+         .must_match_json_expression( {"foo:aspect" => {"@oneof" => [{"@id" => "foo:bar"}, {"@id" => "foo:bam"} ]}} )
 
     query.eq_any_value( "foo:aspect", ["foo:bar", "foo:bam"] )
          .to_json
-         .must_match_json_expression( {"foo:aspect" => {"@or" => [{"@eq" => {"@value" => "foo:bar"}}, {"@eq" => {"@value" => "foo:bam"}} ]}} )
+         .must_match_json_expression( {"foo:aspect" => {"@oneof" => [{"@value" => "foo:bar"}, {"@value" => "foo:bam"} ]}} )
   end
 
 end
