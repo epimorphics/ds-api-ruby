@@ -69,8 +69,12 @@ module DataServicesApi
       QueryGenerator.new( @terms.merge( {aspect => {"@search" => {"@value" => pattern, "@property" => property}}} ) )
     end
 
-    def matches( aspect, pattern )
-      QueryGenerator.new( @terms.merge( {aspect => {"@matches" => pattern}} ) )
+    def matches( aspect, pattern, options = {} )
+      if options[:flags]
+        QueryGenerator.new( @terms.merge( {aspect => {"@matches" => [pattern, options[:flags]]}} ) )
+      else
+        QueryGenerator.new( @terms.merge( {aspect => {"@matches" => pattern}} ) )
+      end
     end
 
     private

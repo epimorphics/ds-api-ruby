@@ -148,6 +148,11 @@ describe "DataServiceApi::QueryGenerator" do
          .to_json
          .must_match_json_expression( {"foo:aspect" => {"@matches" => "bing.*"}} )
 
+    query = DataServicesApi::QueryGenerator.new
+    query.matches( "foo:aspect", "bing.*", flags: "i" )
+         .to_json
+         .must_match_json_expression( {"foo:aspect" => {"@matches" => ["bing.*", "i"]}} )
+
   end
 
 end
