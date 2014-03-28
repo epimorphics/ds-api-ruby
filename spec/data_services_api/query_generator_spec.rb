@@ -119,4 +119,35 @@ describe "DataServiceApi::QueryGenerator" do
                                                                      {"@value" => "foo:bam", "@type" => "xsd:coconut"} ]}} )
 
   end
+
+  it "should allow a terms to be composed" do
+    query = DataServicesApi::QueryGenerator.new
+    query.eq( "foo", "bar" )
+         .eq( "cat", "cow" )
+         .search_aspect_property( "foo:aspect", "foo:bar", "foo" )
+         .to_json
+         .must_match_json_expression( {foo: {"@eq" => "bar"},
+                                       cat: {"@eq" => "cow"},
+                                       "foo:aspect" => {"@search" => {"@value" => "foo", "@property" => "foo:bar"}}
+                                       } )
+
+    # query = DataServicesApi::QueryGenerator.new
+    # query.search_aspect_property( "foo:aspect", "foo:bar", "foo" )
+    #      .search_aspect_property( "foo:aspect", "foo:blom", "fim" )
+    #      .to_json
+    #      .must_match_json_expression( {"@and": [
+    #                                    "foo:aspect" => {"@search" => {"@value" => "foo", "@property" => "foo:bar"}}
+    #                                    "foo:aspect" => {"@search" => {"@value" => "fim", "@property" => "foo:blom"}}
+    #                                    ]
+    #                                    } )
+  end
+
+  it "should allow a regex match to be specified" do
+    query = DataServicesApi::QueryGenerator.new
+    query.matches( "foo:aspect", "bing.*" )
+         .to_json
+         .must_match_json_expression( {"foo:aspect" => {"@matches" => "bing.*"}} )
+
+  end
+
 end

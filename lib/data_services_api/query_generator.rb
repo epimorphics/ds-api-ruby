@@ -4,8 +4,8 @@ module DataServicesApi
   class QueryGenerator
     attr_reader :terms
 
-    def initialize( terms = nil )
-      @terms = terms || {}
+    def initialize( initial_terms = nil )
+      @terms = initial_terms || {}
     end
 
     def to_json
@@ -67,6 +67,10 @@ module DataServicesApi
 
     def search_aspect_property( aspect, property, pattern )
       QueryGenerator.new( @terms.merge( {aspect => {"@search" => {"@value" => pattern, "@property" => property}}} ) )
+    end
+
+    def matches( aspect, pattern )
+      QueryGenerator.new( @terms.merge( {aspect => {"@matches" => pattern}} ) )
     end
 
     private
