@@ -80,7 +80,7 @@ module DataServicesApi
     private
 
     def relational( rel, attribute, value )
-      term = {rel => value}
+      term = {rel => as_typed_value( value )}
       if t = @terms[attribute]
         term = t.merge( term )
       end
@@ -91,6 +91,15 @@ module DataServicesApi
       eq_clauses = values.map {|v| {value_type => v} }
       eq_clauses.each {|eq| eq["@type"] = options[:type]} if options[:type]
       QueryGenerator.new( @terms.merge( {attribute => {"@oneof" => eq_clauses}} ) )
+    end
+
+    def as_typed_value( value )
+      case value
+      when Date
+        {"@value" => value, "@type" => "xsd:date"}
+      else
+        value
+      end
     end
 
 
