@@ -72,6 +72,13 @@ describe "DataServiceApi::QueryGenerator" do
     }.must_raise NameError
   end
 
+  it "should add a value type when required" do
+    query = DataServicesApi::QueryGenerator.new
+    query.op( :ge, :foo, Date.new( "2014-01-01") )
+         .to_json
+         .must_match_json_expression( {foo: {"@ge" => {"@value": "204-01-01", "@type": "xsd:date"}}} )
+  end
+
   it "should allow a text search option to be added" do
     query = DataServicesApi::QueryGenerator.new
     query.search( "foo" )
