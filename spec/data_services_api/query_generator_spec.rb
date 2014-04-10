@@ -107,6 +107,20 @@ describe "DataServiceApi::QueryGenerator" do
          .must_match_json_expression( {"foo:aspect" => {"@search" => {"@value" => "foo", "@property" => "foo:bar"}}} )
   end
 
+  it "should allow the limit to be set on a search query" do
+    query = DataServicesApi::QueryGenerator.new
+    query.search_aspect_property( "foo:aspect", "foo:bar", "foo", "@limit" => 997 )
+         .to_json
+         .must_match_json_expression( {"foo:aspect" => {"@search" => {"@value" => "foo",
+                                                                      "@property" => "foo:bar",
+                                                                      "@limit" => 997 }}} )
+    query.search_property( "foo:bar", "foo", "@limit" => 779 )
+         .to_json
+         .must_match_json_expression( {"@search" => {"@value" => "foo",
+                                                     "@property" => "foo:bar",
+                                                     "@limit" => 779}} )
+  end
+
   it "should allow a simple boolean expression to be added" do
     query = DataServicesApi::QueryGenerator.new
     query.eq_any_uri( "foo:aspect", ["foo:bar", "foo:bam"] )
