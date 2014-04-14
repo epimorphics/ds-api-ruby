@@ -54,28 +54,28 @@ module DataServicesApi
     end
 
     def search( pattern )
-      QueryGenerator.new( @terms.merge( {"@search" => pattern} ) )
+      QueryGenerator.new( merge_terms( {"@search" => pattern} ) )
     end
 
     def search_property( property, pattern, options = {} )
       search_options = {"@value" => pattern, "@property" => property}.merge( options )
-      QueryGenerator.new( @terms.merge( {"@search" => search_options} ) )
+      QueryGenerator.new( merge_terms( {"@search" => search_options} ) )
     end
 
     def search_aspect( aspect, pattern )
-      QueryGenerator.new( @terms.merge( {aspect => {"@search" => pattern}} ) )
+      QueryGenerator.new( merge_terms( {aspect => {"@search" => pattern}} ) )
     end
 
     def search_aspect_property( aspect, property, pattern, options = {} )
       search_options = {"@value" => pattern, "@property" => property}.merge( options )
-      QueryGenerator.new( @terms.merge( {aspect => {"@search" => search_options}} ) )
+      QueryGenerator.new( merge_terms( {aspect => {"@search" => search_options}} ) )
     end
 
     def matches( aspect, pattern, options = {} )
       if options[:flags]
-        QueryGenerator.new( @terms.merge( {aspect => {"@matches" => [pattern, options[:flags]]}} ) )
+        QueryGenerator.new( merge_terms( {aspect => {"@matches" => [pattern, options[:flags]]}} ) )
       else
-        QueryGenerator.new( @terms.merge( {aspect => {"@matches" => pattern}} ) )
+        QueryGenerator.new( merge_terms( {aspect => {"@matches" => pattern}} ) )
       end
     end
 
@@ -86,13 +86,13 @@ module DataServicesApi
       if t = @terms[attribute]
         term = t.merge( term )
       end
-      QueryGenerator.new( @terms.merge( {attribute => term} ))
+      QueryGenerator.new( merge_terms( {attribute => term} ))
     end
 
     def eq_any( attribute, values, value_type, options )
       eq_clauses = values.map {|v| {value_type => v} }
       eq_clauses.each {|eq| eq["@type"] = options[:type]} if options[:type]
-      QueryGenerator.new( @terms.merge( {attribute => {"@oneof" => eq_clauses}} ) )
+      QueryGenerator.new( merge_terms( {attribute => {"@oneof" => eq_clauses}} ) )
     end
 
     def as_typed_value( value )
@@ -102,6 +102,10 @@ module DataServicesApi
       else
         value
       end
+    end
+
+    def merge_terms( term )
+      @terms.merge( {"@and" => ((@terms["@and"] || []) << term) } )
     end
 
 
