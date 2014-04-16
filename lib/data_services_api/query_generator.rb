@@ -79,6 +79,14 @@ module DataServicesApi
       end
     end
 
+    def limit( l )
+      QueryGenerator.new( @terms.merge( {"@limit" => l} ) )
+    end
+
+    def offset( l )
+      QueryGenerator.new( @terms.merge( {"@offset" => l} ) )
+    end
+
     private
 
     def relational( rel, attribute, value )

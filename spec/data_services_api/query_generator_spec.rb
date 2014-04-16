@@ -180,4 +180,11 @@ describe "DataServiceApi::QueryGenerator" do
 
   end
 
+  it "should allow an overall query limit to be set" do
+    query = DataServicesApi::QueryGenerator.new
+    query.limit( 101 )
+         .offset( 20 )
+         .to_json
+         .must_match_json_expression( {"@limit" => 101, "@offset" => 20} )
+  end
 end
