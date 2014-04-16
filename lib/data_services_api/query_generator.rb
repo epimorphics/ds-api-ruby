@@ -87,6 +87,10 @@ module DataServicesApi
       QueryGenerator.new( @terms.merge( {"@offset" => l} ) )
     end
 
+    def count_only
+      QueryGenerator.new( @terms.merge( {"@count" => true} ) )
+    end
+
     private
 
     def relational( rel, attribute, value )

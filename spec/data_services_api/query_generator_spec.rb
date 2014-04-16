@@ -187,4 +187,11 @@ describe "DataServiceApi::QueryGenerator" do
          .to_json
          .must_match_json_expression( {"@limit" => 101, "@offset" => 20} )
   end
+
+  it "should allow a query to be run in count mode" do
+    query = DataServicesApi::QueryGenerator.new
+    query.count_only
+         .to_json
+         .must_match_json_expression( {"@count" => true} )
+  end
 end
