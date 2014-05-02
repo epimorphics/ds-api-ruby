@@ -84,7 +84,7 @@ module DataServicesApi
     end
 
     def set_logger_if_rails( faraday )
-        if defined?( Rails )
+        if defined?( Rails ) && Rails.env.development?
           faraday.response :logger, Rails.logger
         end
     end
