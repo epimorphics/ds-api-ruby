@@ -117,7 +117,7 @@ module DataServicesApi
     end
 
     def merge_terms( term )
-      @terms.merge( {"@and" => ((@terms["@and"] || []) << term) } )
+      @terms.merge( {"@and" => ((@terms["@and"] || []) + [term]) } )
     end
 
 

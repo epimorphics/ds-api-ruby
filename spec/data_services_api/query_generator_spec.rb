@@ -194,4 +194,15 @@ describe "DataServiceApi::QueryGenerator" do
          .to_json
          .must_match_json_expression( {"@count" => true} )
   end
+
+  it "should not share structure between queries" do
+    query_base = DataServicesApi::QueryGenerator.new.le( "foo:crivens", 42 )
+
+    query0 = query_base.eq( "foo:test", {"@id" => "http://foo.bar"})
+
+    query_base.terms["@and"]
+              .size
+              .must_equal 1
+
+  end
 end
