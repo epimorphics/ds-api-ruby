@@ -6,14 +6,8 @@ require 'data_services_api/dataset'
 
 describe "DataServicesAPI::Service", vcr: true do
   before do
-    VCR.insert_cassette name
     @service = DataServicesApi::Service.new
   end
-
-  after do
-    VCR.eject_cassette
-  end
-
 
   it "should return a list of defined datasets" do
     datasets = @service.datasets
