@@ -32,7 +32,7 @@ module DataServicesApi
     # Get parsed JSON from the given URL
     def get_json( http_url, options )
       response = get_from_api( http_url, options )
-      JSON.parse( response.body )
+      parse_json( response.body )
     end
 
     def get_from_api( http_url, options )
@@ -47,9 +47,24 @@ module DataServicesApi
       response
     end
 
+    def parse_json( json )
+      result = nil
+
+      parser.parse( StringIO.new( json )) do |json_hash|
+        if result
+          result = [result] unless result.is_a?( Array )
+          result << json_hash
+        else
+          result = json_hash
+        end
+      end
+
+      result
+    end
+
     def post_json( http_url, json )
       response = post_to_api( http_url, json )
-      JSON.parse( response.body )
+      parse_json( response.body )
     end
 
     def post_to_api( http_url, json )
@@ -91,6 +106,12 @@ module DataServicesApi
 
     def as_http_api( api )
       api.start_with?( "http:" ) ? api : "#{url}#{api}"
+    end
+
+    protected
+
+    def parser
+      @parser ||= Yajl::Parser.new
     end
 
   end
