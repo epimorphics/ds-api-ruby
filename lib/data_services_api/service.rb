@@ -31,26 +31,20 @@ module DataServicesApi
 
     # Get parsed JSON from the given URL
     def get_json( http_url, options )
-      log_if_rails "Getting JSON URL #{http_url}"
       result = nil
 
       Yajl::HttpStream.get( http_url, options ) do |json_hash|
         if result
           result = [result] unless result.is_a?( Array )
           result << json_hash
-          log_if_rails "second or later result"
         else
           result = json_hash
-          log_if_rails "first result"
         end
       end
-
-      log_if_rails "Got JSON result.class = #{result.class.name} #{result.respond_to?( :size ) ? result.size : -1}"
       result
     end
 
     def post_json( http_url, json )
-      log_if_rails "Posting JSON URL #{http_url}"
       result = nil
 
       options = {"Content-Type" => "application/json"}
@@ -58,19 +52,35 @@ module DataServicesApi
         if result
           result = [result] unless result.is_a?( Array )
           result << json_hash
-          log_if_rails "second or later result"
         else
           result = json_hash
-          log_if_rails "first result"
         end
       end
-
-      log_if_rails "Post got JSON result.class = #{result.class.name} #{result.respond_to?( :size ) ? result.size : -1}"
       result
     end
 
-    def log_if_rails( msg )
-        Rails.logger.debug( msg ) if defined?( Rails ) #&& Rails.env.development?
+    def create_http_connection( http_url )
+      Faraday.new( url: http_url ) do |faraday|
+        faraday.request  :url_encoded
+        faraday.use      FaradayMiddleware::FollowRedirects
+        faraday.adapter  :net_http
+        set_logger_if_rails( faraday )
+      end
+    end
+
+    def set_connection_timeout( conn )
+      conn.options[:timeout] = 60
+      conn
+    end
+
+    def ok?( response )
+      (200..207).include?( response.status )
+    end
+
+    def set_logger_if_rails( faraday )
+        if defined?( Rails ) && Rails.env.development?
+          faraday.response :logger, Rails.logger
+        end
     end
 
     def as_http_api( api )
