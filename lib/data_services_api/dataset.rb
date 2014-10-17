@@ -46,7 +46,7 @@ module DataServicesApi
     end
 
     def describe( uri )
-      service.api_get_json( "#{describe_api}?uri=#{URI.encode(uri)}", {} )
+      service.api_get_json( describe_api, {uri: uri} )
     end
 
     def explain( query )

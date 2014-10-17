@@ -31,32 +31,38 @@ module DataServicesApi
 
     # Get parsed JSON from the given URL
     def get_json( http_url, options )
-      result = nil
+      response = get_from_api( http_url, options )
+      JSON.parse( response.body )
+    end
 
-      Yajl::HttpStream.get( http_url, options ) do |json_hash|
-        if result
-          result = [result] unless result.is_a?( Array )
-          result << json_hash
-        else
-          result = json_hash
-        end
+    def get_from_api( http_url, options )
+      conn = set_connection_timeout( create_http_connection( http_url ) )
+
+      response = conn.get do |req|
+        req.headers['Accept'] = "application/json"
+        req.params.merge! options
       end
-      result
+
+      raise "Failed to read from #{http_url}: #{response.status.inspect}" unless ok?( response )
+      response
     end
 
     def post_json( http_url, json )
-      result = nil
+      response = post_to_api( http_url, json )
+      JSON.parse( response.body )
+    end
 
-      options = {"Content-Type" => "application/json"}
-      Yajl::HttpStream.post( http_url, json, options ) do |json_hash|
-        if result
-          result = [result] unless result.is_a?( Array )
-          result << json_hash
-        else
-          result = json_hash
-        end
+    def post_to_api( http_url, json )
+      conn = set_connection_timeout( create_http_connection( http_url ) )
+
+      response = conn.post do |req|
+        req.headers['Accept'] = "application/json"
+        req.headers['Content-Type'] = 'application/json'
+        req.body = json
       end
-      result
+
+      raise "Failed to post to #{http_url}: #{response.status.inspect}" unless ok?( response )
+      response
     end
 
     def create_http_connection( http_url )
