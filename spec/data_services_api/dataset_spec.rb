@@ -55,6 +55,6 @@ describe "DataServiceApi::Dataset" do
     uri = "http://landregistry.data.gov.uk/id/region/south-east"
     json = @dataset.describe( uri )
     json.wont_be_nil
-    json["within"].must_equal "http://landregistry.data.gov.uk/id/region/england-and-wales"
+    json["@graph"][0]["within"].must_equal "http://landregistry.data.gov.uk/id/region/england-and-wales"
   end
 end
