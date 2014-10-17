@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "faraday_middleware"#, "< 0.9.0"
   spec.add_runtime_dependency "json"#, "~> 1.8.0"
+  spec.add_runtime_dependency "yajl-ruby"
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
