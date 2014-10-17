@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:8080/dsapi/dataset
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.9
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - Apache-Coyote/1.1
+      Vary:
+      - accept
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Mon, 24 Mar 2014 15:50:32 GMT
+    body:
+      encoding: UTF-8
+      string: "[ { \n  \"@id\" : \"http://landregistry.data.gov.uk/dsapi/ppd#ppd\"
+        ,\n  \"name\" : \"ppd\" ,\n  \"label\" : \"Property price data\" ,\n  \"description\"
+        : \"A dataset of property transactions\" ,\n  \"data-api\" : \"http://localhost:8080/dsapi/dataset/ppd/data\"
+        ,\n  \"structure-api\" : \"http://localhost:8080/dsapi/dataset/ppd/structure\"
+        ,\n  \"describe-api\" : \"http://localhost:8080/dsapi/dataset/ppd/describe\"
+        ,\n  \"source\" : \"source1\"\n}\n, { \n  \"@id\" : \"http://landregistry.data.gov.uk/dsapi/hpi#hpiLocations\"
+        ,\n  \"name\" : \"hpiLocations\" ,\n  \"label\" : \"HPI locations\" ,\n  \"description\"
+        : \"Locations (regions, counties, boroughs, etc) defined in the HPI data\"
+        ,\n  \"data-api\" : \"http://localhost:8080/dsapi/dataset/hpiLocations/data\"
+        ,\n  \"structure-api\" : \"http://localhost:8080/dsapi/dataset/hpiLocations/structure\"
+        ,\n  \"describe-api\" : \"http://localhost:8080/dsapi/dataset/hpiLocations/describe\"
+        ,\n  \"source\" : \"source2\"\n}\n, { \n  \"@id\" : \"http://landregistry.data.gov.uk/dsapi/ppd#ppd-addresses\"
+        ,\n  \"name\" : \"ppd-addresses\" ,\n  \"label\" : \"Property price data addresses\"
+        ,\n  \"description\" : \"A dataset of addresses in property transactions\"
+        ,\n  \"data-api\" : \"http://localhost:8080/dsapi/dataset/ppd-addresses/data\"
+        ,\n  \"structure-api\" : \"http://localhost:8080/dsapi/dataset/ppd-addresses/structure\"
+        ,\n  \"describe-api\" : \"http://localhost:8080/dsapi/dataset/ppd-addresses/describe\"
+        ,\n  \"source\" : \"source1\"\n}\n, { \n  \"@id\" : \"http://landregistry.data.gov.uk/dsapi/hpi#hpi\"
+        ,\n  \"name\" : \"hpi\" ,\n  \"label\" : \"House price index\" ,\n  \"description\"
+        : \"A Data Cube of house price index data from Land Registry\" ,\n  \"data-api\"
+        : \"http://localhost:8080/dsapi/dataset/hpi/data\" ,\n  \"structure-api\"
+        : \"http://localhost:8080/dsapi/dataset/hpi/structure\" ,\n  \"describe-api\"
+        : \"http://localhost:8080/dsapi/dataset/hpi/describe\" ,\n  \"source\" : \"source2\"\n}\n
+        ]\n"
+    http_version: 
+  recorded_at: Mon, 24 Mar 2014 15:50:32 GMT
+recorded_with: VCR 2.8.0

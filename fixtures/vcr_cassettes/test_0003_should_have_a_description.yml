@@ -1,0 +1,41 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:8080/dsapi/dataset/hpi
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.9
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - Apache-Coyote/1.1
+      Vary:
+      - accept
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Mon, 24 Mar 2014 15:50:32 GMT
+    body:
+      encoding: UTF-8
+      string: "{ \n  \"@id\" : \"http://landregistry.data.gov.uk/dsapi/hpi#hpi\" ,\n
+        \ \"name\" : \"hpi\" ,\n  \"label\" : \"House price index\" ,\n  \"description\"
+        : \"A Data Cube of house price index data from Land Registry\" ,\n  \"data-api\"
+        : \"http://localhost:8080/dsapi/dataset/hpi/data\" ,\n  \"structure-api\"
+        : \"http://localhost:8080/dsapi/dataset/hpi/structure\" ,\n  \"describe-api\"
+        : \"http://localhost:8080/dsapi/dataset/hpi/describe\" ,\n  \"source\" : \"source2\"\n}\n\n"
+    http_version: 
+  recorded_at: Mon, 24 Mar 2014 15:50:32 GMT
+recorded_with: VCR 2.8.0
