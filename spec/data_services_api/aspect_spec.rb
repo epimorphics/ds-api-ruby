@@ -7,8 +7,13 @@ require 'data_services_api/aspect'
 
 describe "DataServiceApi::Aspect" do
   before do
+    VCR.insert_cassette name, :record => :new_episodes
     @aspects = DataServicesApi::Service.new.dataset( "hpi" ).structure
     @aspect1 = @aspects[0]
+  end
+
+  after do
+    VCR.eject_cassette
   end
 
   it "should have a name" do

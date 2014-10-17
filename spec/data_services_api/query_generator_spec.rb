@@ -8,6 +8,14 @@ require 'data_services_api/query_generator'
 require 'pry'
 
 describe "DataServiceApi::QueryGenerator" do
+  before do
+    VCR.insert_cassette name, :record => :new_episodes
+  end
+
+  after do
+    VCR.eject_cassette
+  end
+
   def conjunction( term )
     {"@and" => (term.is_a?( Hash )) ? [term] : Array(term) }
   end

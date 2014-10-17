@@ -7,7 +7,12 @@ require 'data_services_api/aspect'
 
 describe "DataServiceApi::Dataset" do
   before do
+    VCR.insert_cassette name, :record => :new_episodes
     @dataset = DataServicesApi::Service.new.dataset( "hpi" )
+  end
+
+  after do
+    VCR.eject_cassette
   end
 
   it "should have an id" do
@@ -50,6 +55,6 @@ describe "DataServiceApi::Dataset" do
     uri = "http://landregistry.data.gov.uk/id/region/south-east"
     json = @dataset.describe( uri )
     json.wont_be_nil
-    json["@graph"][0]["within"].must_equal "http://landregistry.data.gov.uk/id/region/england-and-wales"
+    json["within"].must_equal "http://landregistry.data.gov.uk/id/region/england-and-wales"
   end
 end
