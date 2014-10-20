@@ -12,6 +12,10 @@ module DataServicesApi
       @terms.to_json
     end
 
+    def compact_json
+      QueryGenerator.new( @terms.merge( {"@json_mode" => "compact"} ) )
+    end
+
     def eq( attribute, value )
       relational( "@eq", attribute, value )
     end

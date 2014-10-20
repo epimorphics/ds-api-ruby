@@ -205,4 +205,12 @@ describe "DataServiceApi::QueryGenerator" do
               .must_equal 1
 
   end
+
+  it "should allow compact JSON to be specified" do
+    query = DataServicesApi::QueryGenerator.new
+
+    query.compact_json
+         .to_json
+         .must_match_json_expression( {"@json_mode" => "compact"} )
+  end
 end
