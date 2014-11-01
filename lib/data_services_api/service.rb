@@ -119,12 +119,13 @@ module DataServicesApi
 
     def report_json_failure( json )
       if defined?( Rails )
-        filename = Rails.root.join( "tmp/output-#{Random.rand.to_s.slice(2..-1)}.json" )
-        File.open( filename, "w" ) do |file|
-          file << json
-        end
+        # filename = Rails.root.join( "tmp/output-#{Random.rand.to_s.slice(2..-1)}.json" )
+        # File.open( filename, "w" ) do |file|
+        #   file << json
+        # end
 
-        msg = "JSON result was not parsed correctly. Incoming JSON saved in #{filename}"
+        # msg = "JSON result was not parsed correctly. Incoming JSON saved in #{filename}"
+        msg = "JSON result was not parsed correctly (no temp file saved)"
         Rails.logger.info( msg )
         throw msg
       else
