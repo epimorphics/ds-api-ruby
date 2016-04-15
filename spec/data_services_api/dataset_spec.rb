@@ -1,10 +1,5 @@
 require './spec/minitest_helper'
 
-require 'json'
-require 'data_services_api/service'
-require 'data_services_api/dataset'
-require 'data_services_api/aspect'
-
 describe "DataServiceApi::Dataset" do
   before do
     VCR.insert_cassette name, :record => :new_episodes
@@ -20,11 +15,11 @@ describe "DataServiceApi::Dataset" do
   end
 
   it "should have a label" do
-    @dataset.label.must_match /House price index/
+    @dataset.label.must_match( /House price index/)
   end
 
   it "should have a description" do
-    @dataset.description.must_match /A Data Cube of house price/
+    @dataset.description.must_match( /A Data Cube of house price/)
   end
 
   it "should describe its own structure as a set of aspects" do

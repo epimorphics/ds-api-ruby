@@ -1,12 +1,5 @@
 require './spec/minitest_helper'
 
-require 'json'
-require 'data_services_api/service'
-require 'data_services_api/dataset'
-require 'data_services_api/aspect'
-require 'data_services_api/query_generator'
-require 'pry'
-
 describe "DataServiceApi::QueryGenerator" do
   before do
     VCR.insert_cassette name, :record => :new_episodes
@@ -198,7 +191,7 @@ describe "DataServiceApi::QueryGenerator" do
   it "should not share structure between queries" do
     query_base = DataServicesApi::QueryGenerator.new.le( "foo:crivens", 42 )
 
-    query0 = query_base.eq( "foo:test", {"@id" => "http://foo.bar"})
+    query_base.eq( "foo:test", {"@id" => "http://foo.bar"})
 
     query_base.terms["@and"]
               .size

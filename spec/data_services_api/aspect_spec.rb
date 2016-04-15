@@ -1,10 +1,5 @@
 require './spec/minitest_helper'
 
-require 'json'
-require 'data_services_api/service'
-require 'data_services_api/dataset'
-require 'data_services_api/aspect'
-
 describe "DataServiceApi::Aspect" do
   before do
     VCR.insert_cassette name, :record => :new_episodes
@@ -22,19 +17,19 @@ describe "DataServiceApi::Aspect" do
   end
 
   it "should have a URI" do
-    @aspect1.uri.must_match /^http:/
+    @aspect1.uri.must_match( /^http:/)
   end
 
   it "should have an ID" do
-    @aspect1.id.must_match /^http:/
+    @aspect1.id.must_match( /^http:/)
   end
 
   it "should have a label" do
-    @aspect1.label.must_match /.+/
+    @aspect1.label.must_match( /.+/)
   end
 
   it "should have a description" do
-    @aspect1.description.must_match /.+/
+    @aspect1.description.must_match( /.+/)
   end
 
   it "should not be optional" do
@@ -46,7 +41,7 @@ describe "DataServiceApi::Aspect" do
   end
 
   it "should have a range type" do
-    @aspect1.range_type.must_match /http:\/\/www.w3.org\/2001\/XMLSchema#/
+    @aspect1.range_type.must_match( /http:\/\/www.w3.org\/2001\/XMLSchema#/)
   end
 
   it "should have a reference to the service object" do

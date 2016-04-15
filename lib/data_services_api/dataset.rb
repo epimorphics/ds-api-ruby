@@ -34,7 +34,7 @@ module DataServicesApi
     end
 
     def structure
-      unless @structure
+      unless defined?( @structure )
         description = service.api_get_json( structure_api )
         aspects = description["aspects"]
         @structure = aspects.map {|json| Aspect.new( json, service )}

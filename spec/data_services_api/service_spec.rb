@@ -1,9 +1,5 @@
 require './spec/minitest_helper'
 
-require 'json'
-require 'data_services_api/service'
-require 'data_services_api/dataset'
-
 describe "DataServicesAPI::Service", vcr: true do
   before do
     VCR.insert_cassette name

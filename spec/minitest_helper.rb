@@ -1,21 +1,16 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
+require "yajl"
+
+require "bundler"
+Bundler.require( :default, :development, :test )
+
 require "minitest"
-require 'faraday'
-require 'vcr'
-require 'minitest-vcr'
-require 'webmock'
-
 require "minitest/autorun"
-require "minispec-metadata"
-require 'minitest/rg'
-require 'json_expressions/minitest'
-
-require "webmock"
-require "mocha/setup"
-require 'faraday_middleware'
+require "minitest/rg"
 require "faraday"
-require "vcr"
+require "faraday_middleware"
+require "json_expressions/minitest"
 
 VCR.configure do |c|
   c.cassette_library_dir = 'fixtures/vcr_cassettes'
