@@ -5,6 +5,7 @@ require "data_services_api/service"
 require "data_services_api/dataset"
 require "data_services_api/aspect"
 require "data_services_api/query_generator"
+require "data_services_api/value"
 
 module DataServicesApi
 end
