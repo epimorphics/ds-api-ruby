@@ -43,8 +43,7 @@ module DataServicesApi
         req.params.merge! options
       end
 
-      raise "Failed to read from #{http_url}: #{response.status.inspect}" unless ok?( response )
-      response
+      ok?( response, http_url ) && response
     end
 
     # Parse the given JSON string into a data structure. Throws an exception if
@@ -97,8 +96,13 @@ module DataServicesApi
       conn
     end
 
-    def ok?( response )
-      (200..207).include?( response.status )
+    def ok?( response, http_url )
+      unless (200..207).include?( response.status )
+        msg = "Failed to read from #{http_url}: #{response.status.inspect}"
+        raise ServiceException.new( msg, response.status, http_url, response.body )
+      end
+
+      true
     end
 
     def set_logger_if_rails( faraday )
