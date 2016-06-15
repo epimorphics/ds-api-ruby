@@ -78,8 +78,7 @@ module DataServicesApi
         req.body = json
       end
 
-      raise "Failed to post to #{http_url}: #{response.status.inspect}" unless ok?( response )
-      response
+      ok?( response, http_url ) && response
     end
 
     def create_http_connection( http_url )
