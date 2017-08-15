@@ -3,7 +3,7 @@ require './spec/minitest_helper'
 describe 'DataServiceApi::Aspect' do
   before do
     VCR.insert_cassette name, record: :new_episodes
-    @aspects = DataServicesApi::Service.new.dataset('hpi').structure
+    @aspects = DataServicesApi::Service.new.dataset('ukhpi').structure
     @aspect1 = @aspects[0]
   end
 

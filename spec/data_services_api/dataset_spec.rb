@@ -3,7 +3,7 @@ require './spec/minitest_helper'
 describe 'DataServiceApi::Dataset' do
   before do
     VCR.insert_cassette name, record: :new_episodes
-    @dataset = DataServicesApi::Service.new.dataset('hpi')
+    @dataset = DataServicesApi::Service.new.dataset('ukhpi')
   end
 
   after do
@@ -15,11 +15,11 @@ describe 'DataServiceApi::Dataset' do
   end
 
   it 'should have a label' do
-    @dataset.label.must_match(/House price index/)
+    @dataset.label.must_match(/UK house price index/)
   end
 
   it 'should have a description' do
-    @dataset.description.must_match(/A Data Cube of house price/)
+    @dataset.description.must_match(/A Data Cube of UK house price/)
   end
 
   it 'should describe its own structure as a set of aspects' do
@@ -40,7 +40,7 @@ describe 'DataServiceApi::Dataset' do
   end
 
   it 'should accept a query and return the result' do
-    query = { 'hpi:refRegionName' => { '@eq' => 'Somerset' } }
+    query = { 'ukhpi:refRegion' => { '@eq' => { '@id' => 'http://landregistry.data.gov.uk/id/region/somerset' } } }
     json = @dataset.query(query)
     json.wont_be_nil
     json.size.must_be :>, 0
@@ -50,6 +50,6 @@ describe 'DataServiceApi::Dataset' do
     uri = 'http://landregistry.data.gov.uk/id/region/south-east'
     json = @dataset.describe(uri)
     json.wont_be_nil
-    json['@graph'][0]['within'].must_equal 'http://landregistry.data.gov.uk/id/region/england-and-wales'
+    json['@graph'][0]['within'].must_include 'http://landregistry.data.gov.uk/id/region/england-and-wales'
   end
 end

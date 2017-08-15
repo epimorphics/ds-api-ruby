@@ -24,7 +24,7 @@ describe 'DataServicesAPI::Service', vcr: true do
   end
 
   it 'should find a dataset by name' do
-    dataset = @service.dataset('hpi')
-    dataset.id.must_equal 'http://landregistry.data.gov.uk/dsapi/hpi#hpi'
+    dataset = @service.dataset('ukhpi')
+    dataset.id.must_equal 'http://landregistry.data.gov.uk/dsapi/hpi#ukhpi'
   end
 end
