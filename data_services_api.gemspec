@@ -1,4 +1,5 @@
 # coding: utf-8
+# frozen-string-literal: true
 
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
@@ -31,4 +32,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'excon'
   spec.add_development_dependency 'json_expressions'
   spec.add_development_dependency 'minitest-vcr'
+  spec.add_development_dependency 'byebug'
 end
