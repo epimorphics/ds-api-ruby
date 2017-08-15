@@ -17,7 +17,7 @@ module DataServicesApi
     end
 
     def respond_to_missing?(attribute)
-      @json.key?(attribute)
+      @json.key?(attribute.to_s)
     end
 
     def data_api
@@ -38,7 +38,7 @@ module DataServicesApi
     end
 
     def structure
-      return unless defined?(@structure)
+      return @structure if defined?(@structure)
 
       description = service.api_get_json(structure_api)
       aspects = description['aspects']
