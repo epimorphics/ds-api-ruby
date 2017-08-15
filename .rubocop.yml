@@ -1,0 +1,14 @@
+Metrics/LineLength:
+  Max: 100
+  Exclude:
+    - spec/**/*
+
+AllCops:
+  Exclude:
+    - config/unicorn.rb
+    - db/**
+
+Metrics/BlockLength:
+  Enabled: true
+  Exclude:
+    - spec/**/*

@@ -1,33 +1,38 @@
 module DataServicesApi
+  # Encapsulates a DSAPI Aspect
+  # TODO say more here!
   class Aspect
     attr_reader :service
 
-    def initialize( json, service )
+    def initialize(json, service)
       @json = json
       @service = service
     end
 
     def id
-      @json["@id"]
+      @json['@id']
     end
 
-    alias :uri :id
+    alias uri id
 
-    def method_missing( name )
-      @json[name.to_s]
+    def method_missing(name)
+      respond_to_missing?(name) ? @json[name.to_s] : super
+    end
+
+    def respond_to_missing?(name)
+      @json.key?(name.to_s)
     end
 
     def optional?
-      self.isOptional
+      isOptional
     end
 
     def multi_valued?
-      self.isMultiValued
+      isMultiValued
     end
 
     def range_type
-      self.rangeType
+      rangeType
     end
-
   end
 end
