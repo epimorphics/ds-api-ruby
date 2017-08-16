@@ -86,8 +86,13 @@ module DataServicesApi
       Faraday.new(url: http_url) do |faraday|
         faraday.request  :url_encoded
         faraday.use      FaradayMiddleware::FollowRedirects
+
+        if defined?(Rails) && Rails.env.development?
+          faraday.response :logger, Rails.logger
+        end
+
+        # setting the adapter must be the final step, otherwise get a warning from Faraday
         faraday.adapter  :net_http
-        set_logger_if_rails(faraday)
       end
     end
 
@@ -103,11 +108,6 @@ module DataServicesApi
       end
 
       true
-    end
-
-    def set_logger_if_rails(faraday)
-      return unless defined?(Rails) && Rails.env.development?
-      faraday.response :logger, Rails.logger
     end
 
     def as_http_api(api)
