@@ -19,7 +19,7 @@ module DataServicesApi
       respond_to_missing?(name) ? @json[name.to_s] : super
     end
 
-    def respond_to_missing?(name)
+    def respond_to_missing?(name, _args = nil)
       @json.key?(name.to_s)
     end
 
