@@ -1,6 +1,8 @@
 module DataServicesApi
   # Encapsulates a DSAPI Aspect
-  # TODO say more here!
+  # This corresponds to one of the measures of the underlying data cube, which
+  # becomes an _aspect_ of the object description that the DSApi query encapsulates.
+  # See https://github.com/epimorphics/data-API/wiki/Data-Query-Syntax
   class Aspect
     attr_reader :service
 
