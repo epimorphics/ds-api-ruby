@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './spec/minitest_helper'
 
 describe 'DataServicesAPI::Service', vcr: true do

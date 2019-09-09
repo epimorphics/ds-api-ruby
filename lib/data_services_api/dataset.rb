@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DataServicesApi
   # Encapsulates a single dataset from the data services API
   class Dataset

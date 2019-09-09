@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DataServicesApi
   # Encapsulates a DSAPI Aspect
   # This corresponds to one of the measures of the underlying data cube, which

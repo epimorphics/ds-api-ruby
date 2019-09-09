@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Capture exceptions when talking to remote services
 
 module DataServicesApi

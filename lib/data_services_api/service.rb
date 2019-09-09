@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 module DataServicesApi
   # Denotes the encapsulated DataServicesAPI service
-  # rubocop:disable Style/AccessorMethodName
   class Service
-    DEFAULT_URL = 'http://localhost:8080/dsapi'.freeze
+    DEFAULT_URL = 'http://localhost:8080/dsapi'
 
     attr_reader :url
 
@@ -16,6 +17,7 @@ module DataServicesApi
 
     def dataset(name)
       raise 'Dataset name is required' unless name
+
       json = api_get_json("/dataset/#{name}")
       json && Dataset.new(json, self)
     end
@@ -87,7 +89,7 @@ module DataServicesApi
         faraday.request  :url_encoded
         faraday.use      FaradayMiddleware::FollowRedirects
 
-        if defined?(Rails) && Rails.env.development?
+        if defined?(Rails) && Rails.respond_to?(:env) && Rails.env.development?
           faraday.response :logger, Rails.logger
         end
 
@@ -96,7 +98,7 @@ module DataServicesApi
       end
     end
 
-    def set_connection_timeout(conn)
+    def set_connection_timeout(conn) # rubocop:disable Naming/AccessorMethodName
       conn.options[:timeout] = 600
       conn
     end

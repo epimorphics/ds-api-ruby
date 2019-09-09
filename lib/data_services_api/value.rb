@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DataServicesApi
   # Encapsulates a single value coming back from the API
   class Value < Hash
@@ -20,7 +22,7 @@ module DataServicesApi
     end
 
     def with_uri(uri)
-      Value.new(self, :"@id" => uri)
+      Value.new(self, "@id": uri)
     end
 
     def self.uri(uri)
@@ -28,7 +30,7 @@ module DataServicesApi
     end
 
     def with_typed_value(value, type)
-      Value.new(self, :"@value" => value, :"@type" => type)
+      Value.new(self, "@value": value, "@type": type)
     end
 
     def with_year_month(year, month)

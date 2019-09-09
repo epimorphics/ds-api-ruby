@@ -1,13 +1,17 @@
+# frozen_string_literal: true
+
 module DataServicesApi
   # Generate Data Service API queries, and serialize as JSON
   class QueryGenerator
+    OPERATIONS = %w[@eq @ge @gt @le @lt].freeze
+
     attr_reader :terms
 
     def initialize(initial_terms = nil)
       @terms = initial_terms || {}
     end
 
-    def to_json
+    def to_json(*_args)
       @terms.to_json
     end
 
@@ -43,10 +47,11 @@ module DataServicesApi
       relational('@lt', attribute, value)
     end
 
-    def op(op, attribute, value)
-      op = op.is_a?(Symbol) ? "@#{op}" : op
-      raise NameError, "Unrecognised operation #{op}" unless %w[@eq @ge @gt @le @lt].include?(op)
-      relational(op, attribute, value)
+    def op(oper, attribute, value)
+      oper = oper.is_a?(Symbol) ? "@#{oper}" : oper
+      raise NameError, "Unrecognised operation #{oper}" unless OPERATIONS.include?(oper)
+
+      relational(oper, attribute, value)
     end
 
     def sort(up_or_down, attribute)
@@ -82,12 +87,12 @@ module DataServicesApi
       end
     end
 
-    def limit(l)
-      QueryGenerator.new(@terms.merge('@limit' => l))
+    def limit(lim)
+      QueryGenerator.new(@terms.merge('@limit' => lim))
     end
 
-    def offset(l)
-      QueryGenerator.new(@terms.merge('@offset' => l))
+    def offset(num)
+      QueryGenerator.new(@terms.merge('@offset' => num))
     end
 
     def count_only
