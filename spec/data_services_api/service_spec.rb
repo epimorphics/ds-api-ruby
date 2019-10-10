@@ -14,19 +14,19 @@ describe 'DataServicesAPI::Service', vcr: true do
 
   it 'should return a list of defined datasets' do
     datasets = @service.datasets
-    datasets.must_respond_to :size
-    datasets.size.must_be :>=, 0
+    _(datasets).must_respond_to :size
+    _(datasets.size).must_be :>=, 0
   end
 
   it 'should provide the identity of every dataset' do
     @service.datasets.each do |dataset|
-      dataset.must_respond_to :id
-      dataset.id.wont_be_nil
+      _(dataset).must_respond_to :id
+      _(dataset.id).wont_be_nil
     end
   end
 
   it 'should find a dataset by name' do
     dataset = @service.dataset('ukhpi')
-    dataset.id.must_equal 'http://landregistry.data.gov.uk/dsapi/hpi#ukhpi'
+    _(dataset.id).must_equal 'http://landregistry.data.gov.uk/dsapi/hpi#ukhpi'
   end
 end
