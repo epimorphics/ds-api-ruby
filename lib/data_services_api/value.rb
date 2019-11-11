@@ -34,7 +34,9 @@ module DataServicesApi
     end
 
     def with_year_month(year, month)
-      with_typed_value(format('%04d-%02d', year.to_i, month.to_i),
+      with_typed_value(format('%04<year_digits>d-%02<month_digits>d',
+                              year_digits: year.to_i,
+                              month_digits: month.to_i),
                        'http://www.w3.org/2001/XMLSchema#gYearMonth')
     end
 
