@@ -1,5 +1,10 @@
 # Changelog for DS API rubygem
 
+## 0.4.5 - 2019-11-11
+
+- dependency updates
+- fixed some minor Rubocop warnings
+
 ## 0.4.4 - 2019-10-10
 
 - dependency updates
