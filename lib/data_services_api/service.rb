@@ -18,8 +18,10 @@ module DataServicesApi
     def dataset(name)
       raise 'Dataset name is required' unless name
 
-      json = api_get_json("/dataset/#{name}")
-      json && Dataset.new(json, self)
+      endpoint = {
+        'data-api' => "#{@url}/landregistry/id/#{name}"
+      }
+      Dataset.new(endpoint, self)
     end
 
     def api_get_json(api, options = {})
