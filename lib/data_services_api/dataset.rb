@@ -49,7 +49,11 @@ module DataServicesApi
     end
 
     def query(query)
-      service.api_post_json(data_api, query.to_json)
+      converter = SapiNTConverter.new(query.to_json)
+      sapi_query = converter.to_sapint_query
+      query_url = "#{data_api}?#{sapi_query}"
+      sapint_response = service.api_get_json(query_url)
+      converter.to_dsapi_response(sapint_response)
     end
 
     def describe(uri)
