@@ -61,7 +61,8 @@ module DataServicesApi
     end
 
     def explain(query)
-      service.api_post_json(explain_api, query.to_json)
+      # service.api_post_json(explain_api, query.to_json)
+      # WAITING ON SAPITNT EXPLAIN
     end
   end
 end
