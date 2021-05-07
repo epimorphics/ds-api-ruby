@@ -28,6 +28,10 @@ module DataServicesApi
       get_json(as_http_api(api), params, options)
     end
 
+    def api_get_text(api, params, options = {})
+      get_text(as_http_api(api), params, options)
+    end
+
     def api_post_json(api, json)
       post_json(as_http_api(api), json)
     end

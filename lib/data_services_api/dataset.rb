@@ -60,8 +60,12 @@ module DataServicesApi
     end
 
     def explain(query)
-      # service.api_post_json(explain_api, query.to_json)
-      # WAITING ON SAPITNT EXPLAIN
+      converter = SapiNTConverter.new(query.to_json)
+      sapi_query_params = converter.to_sapint_query
+      explain_url = "#{data_api}/explain"
+      { sparql: service.api_get_text(explain_url, sapi_query_params) }
+    end
+
     private
 
     # Converts SAPINT returned JSON format to DSAPI returned JSON format
