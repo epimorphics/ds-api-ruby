@@ -50,10 +50,9 @@ module DataServicesApi
 
     def query(query)
       converter = SapiNTConverter.new(query.to_json)
-      sapi_query = converter.to_sapint_query
-      query_url = "#{data_api}?#{sapi_query}"
-      sapint_response = service.api_get_json(query_url)
-      converter.to_dsapi_response(sapint_response)
+      sapi_query_params = converter.to_sapint_query
+      sapint_response = service.api_get_json(data_api, sapi_query_params)
+      to_dsapi_response(sapint_response)
     end
 
     def describe(uri)
@@ -63,6 +62,37 @@ module DataServicesApi
     def explain(query)
       # service.api_post_json(explain_api, query.to_json)
       # WAITING ON SAPITNT EXPLAIN
+    private
+
+    # Converts SAPINT returned JSON format to DSAPI returned JSON format
+    def to_dsapi_response(sapint_response)
+      sapint_response['items'].map do |value|
+        to_dsapi_item(value)
+      end
+    end
+
+    def to_dsapi_item(sapint_item)
+      dsapi_item = {}
+
+      sapint_item.each do |key, value|
+        dsapi_json = to_dsapi_json(key, value)
+        dsapi_item.merge!(dsapi_json)
+      end
+
+      dsapi_item
+    end
+
+    def to_dsapi_json(sapint_key, sapint_value)
+      dataset_name = data_api.split('/').slice(-1)
+
+      return { sapint_key => sapint_value } if sapint_key == '@id'
+      return { "#{dataset_name}:#{sapint_key}" => sapint_value } unless sapint_value.is_a?(Hash)
+
+      dsapi_json = {}
+      sapint_value.each do |key, value|
+        dsapi_json["#{dataset_name}:#{sapint_key}#{key == '@id' ? '' : key.capitalize}"] = value
+      end
+      dsapi_json
     end
   end
 end
