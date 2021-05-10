@@ -27,7 +27,7 @@ module DataServicesApi
       when '@offset'
         offset(value)
       when '@and'
-        andd(value)
+        and_list(value)
       end
     end
 
@@ -39,7 +39,7 @@ module DataServicesApi
     end
 
     def count(value)
-      '_count=@id' if value == true
+      '_count=@id' if value
     end
 
     def limit(value)
@@ -50,17 +50,22 @@ module DataServicesApi
       "_offset=#{value}"
     end
 
-    def andd(values)
-      values.map do |value|
-        attribute = remove_prefix(value.keys[0])
-        rel = value.values[0].keys[0]
-        json = value.values[0].values[0]
-        relation(rel, attribute, json)
+    def and_list(list)
+      list.map do |value|
+        and_item(value)
       end
     end
 
-    def relation(rel, attribute, json)
-      case rel
+    def and_item(json_item)
+      attribute = remove_prefix(json_item.first[0])
+      attribute_json = json_item.first[1]
+      relation = attribute_json.first[0]
+      relation_json = attribute_json.first[1]
+      relation(relation, attribute, relation_json)
+    end
+
+    def relation(relation, attribute, json)
+      case relation
       when '@eq'
         eq(attribute, json)
       when '@oneof'
