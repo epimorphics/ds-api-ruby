@@ -71,13 +71,13 @@ module DataServicesApi
       when '@oneof'
         oneof(attribute, json)
       when '@ge'
-        ge(attribute, json)
+        "mineq-#{comparison(attribute, json)}"
       when '@gt'
-        gt(attribute, json)
+        "min-#{comparison(attribute, json)}"
       when '@le'
-        le(attribute, json)
+        "maxeq-#{comparison(attribute, json)}"
       when '@lt'
-        lt(attribute, json)
+        "max-#{comparison(attribute, json)}"
       when '@search'
         search(attribute, json)
       end
@@ -96,28 +96,10 @@ module DataServicesApi
       end
     end
 
-    def ge(attribute, value)
-      return "mineq-#{attribute}=#{value}" unless value.is_a?(Hash)
+    def comparison(attribute, value)
+      return "#{attribute}=#{value}" unless value.is_a?(Hash)
 
-      "mineq-#{attribute}=#{value['@value']}"
-    end
-
-    def gt(attribute, value)
-      return "min-#{attribute}=#{value}" unless value.is_a?(Hash)
-
-      "min-#{attribute}=#{value['@value']}"
-    end
-
-    def le(attribute, value)
-      return "maxeq-#{attribute}=#{value}" unless value.is_a?(Hash)
-
-      "maxeq-#{attribute}=#{value['@value']}"
-    end
-
-    def lt(attribute, value)
-      return "max-#{attribute}=#{value}" unless value.is_a?(Hash)
-
-      "max-#{attribute}=#{value['@value']}"
+      "#{attribute}=#{value['@value']}"
     end
 
     def search(attribute, value)
