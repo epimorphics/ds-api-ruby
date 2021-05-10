@@ -49,10 +49,9 @@ module DataServicesApi
     end
 
     def query(query)
-      converter = SapiNTConverter.new(query.to_json)
-      sapi_query_params = converter.to_sapint_query
+      sapi_query_params = SapiNTConverter.new(query.to_json).to_sapint_query
       sapint_response = service.api_get_json(data_api, sapi_query_params)
-      to_dsapi_response(sapint_response)
+      DSAPIResponseConverter.new(sapint_response, data_api).to_dsapi_response
     end
 
     def describe(uri)
@@ -60,36 +59,9 @@ module DataServicesApi
     end
 
     def explain(query)
-      converter = SapiNTConverter.new(query.to_json)
-      sapi_query_params = converter.to_sapint_query
+      sapi_query_params = SapiNTConverter.new(query.to_json).to_sapint_query
       explain_url = "#{data_api}/explain"
       { sparql: service.api_get_text(explain_url, sapi_query_params) }
-    end
-
-    private
-
-    # Converts SAPINT returned JSON format to DSAPI returned JSON format
-    def to_dsapi_response(sapint_response)
-      sapint_response['items'].map do |value|
-        to_dsapi_item(value)
-      end
-    end
-
-    def to_dsapi_item(sapint_item)
-      sapint_item.reduce({}) do |result, (key, value)|
-        result.merge(to_dsapi_json(key, value))
-      end
-    end
-
-    def to_dsapi_json(sapint_key, sapint_value)
-      dataset_name = data_api.split('/').slice(-1)
-
-      return { sapint_key => sapint_value } if sapint_key == '@id'
-      return { "#{dataset_name}:#{sapint_key}" => sapint_value } unless sapint_value.is_a?(Hash)
-
-      sapint_value.map do |key, value|
-        ["#{dataset_name}:#{sapint_key}#{key == '@id' ? '' : key.capitalize}", value]
-      end.to_h
     end
   end
 end
