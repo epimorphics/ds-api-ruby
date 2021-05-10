@@ -76,14 +76,9 @@ module DataServicesApi
     end
 
     def to_dsapi_item(sapint_item)
-      dsapi_item = {}
-
-      sapint_item.each do |key, value|
-        dsapi_json = to_dsapi_json(key, value)
-        dsapi_item.merge!(dsapi_json)
+      sapint_item.reduce({}) do |result, (key, value)|
+        result.merge(to_dsapi_json(key, value))
       end
-
-      dsapi_item
     end
 
     def to_dsapi_json(sapint_key, sapint_value)
@@ -92,11 +87,9 @@ module DataServicesApi
       return { sapint_key => sapint_value } if sapint_key == '@id'
       return { "#{dataset_name}:#{sapint_key}" => sapint_value } unless sapint_value.is_a?(Hash)
 
-      dsapi_json = {}
-      sapint_value.each do |key, value|
-        dsapi_json["#{dataset_name}:#{sapint_key}#{key == '@id' ? '' : key.capitalize}"] = value
-      end
-      dsapi_json
+      sapint_value.map do |key, value|
+        ["#{dataset_name}:#{sapint_key}#{key == '@id' ? '' : key.capitalize}", value]
+      end.to_h
     end
   end
 end
