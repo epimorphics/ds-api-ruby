@@ -8,10 +8,11 @@ module DataServicesApi
 
     # Converts a DSAPI query to SAPINT query
     def to_sapint_query
-      result = @dsapi_query.map do |key, value|
-        sapint_query(key, value)
-      end.compact.join('&')
-      sanitize_result(result)
+      @dsapi_query.reduce({}) do |res, (key, value)|
+        json = sapint_query(key, value)
+        json ||= {} # this is a safeguard to avoid nil values
+        res.merge(json)
+      end
     end
 
     private
@@ -34,25 +35,27 @@ module DataServicesApi
     def sort(values)
       values.map do |value|
         sort_prop = value.key?('@up') ? "+#{value['@up']}" : "-#{value['@down']}"
-        "_sort=#{sort_prop}"
-      end
+        ['_sort' => sort_prop]
+      end.to_h
     end
 
     def count(value)
-      '_count=@id' if value
+      { '_count' => '@id' } if value
     end
 
     def limit(value)
-      "_limit=#{value}"
+      { '_limit' => value }
     end
 
     def offset(value)
-      "_offset=#{value}"
+      { '_offset' => value }
     end
 
     def and_list(list)
-      list.map do |value|
-        and_item(value)
+      list.reduce({}) do |result, value|
+        result.merge(and_item(value)) do |key, oldval, newval|
+          key == 'searchPath' ? oldval : [oldval].push(newval).flatten
+        end
       end
     end
 
@@ -71,64 +74,53 @@ module DataServicesApi
       when '@oneof'
         oneof(attribute, json)
       when '@ge'
-        "mineq-#{comparison(attribute, json)}"
+        comparison('mineq', attribute, json)
       when '@gt'
-        "min-#{comparison(attribute, json)}"
+        comparison('min', attribute, json)
       when '@le'
-        "maxeq-#{comparison(attribute, json)}"
+        comparison('maxeq', attribute, json)
       when '@lt'
-        "max-#{comparison(attribute, json)}"
+        comparison('max', attribute, json)
       when '@search'
         search(attribute, json)
       end
     end
 
     def eq(attribute, value)
-      return "#{attribute}=#{value}" unless value.is_a?(Hash)
-      return "#{attribute}=#{remove_prefix(value['@id'])}" if value.key?('@id')
+      return { attribute => value } unless value.is_a?(Hash)
+      return { attribute => remove_prefix(value['@id']) } if value.key?('@id')
 
-      "#{attribute}=#{value['@value']}"
+      { attribute => value['@value'] }
     end
 
     def oneof(attribute, values)
-      values.map do |value|
-        eq(attribute, value)
+      values.reduce({}) do |result, value|
+        result.merge(eq(attribute, value)) do |_key, oldval, newval|
+          [oldval].push(newval).flatten
+        end
       end
     end
 
-    def comparison(attribute, value)
-      return "#{attribute}=#{value}" unless value.is_a?(Hash)
+    def comparison(prefix, attribute, value)
+      return { "#{prefix}-#{attribute}" => value } unless value.is_a?(Hash)
 
-      "#{attribute}=#{value['@value']}"
+      { "#{prefix}-#{attribute}" => value['@value'] }
     end
 
     def search(attribute, value)
       property = remove_prefix(value['@property'])
       search_text = sanitize_search(value['@value'])
-      "searchPath=#{attribute}&search-#{property}=#{search_text}"
+      { 'searchPath' => attribute, "search-#{property}" => search_text }
     end
 
     def sanitize_search(search_text)
       search_text
         .gsub(' AND ', ' ')
-        .gsub('( ', '')
-        .gsub(' )', '')
+        .gsub(/(\( | \))/, '')
     end
 
     def remove_prefix(value)
-      value.split(':')[1] unless value.slice(0...4) == 'http'
-    end
-
-    # Removes duplicate searchPaths and constructs JSON from params array
-    def sanitize_result(result)
-      json_result = {}
-      result.split('&').each do |value|
-        param = value.split('=')
-        json_result[param[0]] = [] unless json_result.key?(param[0])
-        json_result[param[0]].push(param[1])
-      end
-      json_result['searchPath'] && json_result['searchPath'] = [json_result['searchPath'].first]
-      json_result
+      value.split(':')[1] unless value.match?(/^http/)
     end
   end
 end
