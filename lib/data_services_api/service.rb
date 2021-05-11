@@ -28,8 +28,8 @@ module DataServicesApi
       get_json(as_http_api(api), params, options)
     end
 
-    def api_get_text(api, params, options = {})
-      get_text(as_http_api(api), params, options)
+    def api_get_raw(api, params, options = {})
+      get_raw(as_http_api(api), params, options)
     end
 
     def api_post_json(api, json)
@@ -40,20 +40,20 @@ module DataServicesApi
 
     # Get parsed JSON from the given URL
     def get_json(http_url, params, options)
-      response = get_from_api(http_url, params, options)
+      response = get_from_api(http_url, 'application/json', params, options)
       parse_json(response.body)
     end
 
-    def get_text(http_url, params, options)
-      response = get_from_api(http_url, params, options)
+    def get_raw(http_url, params, options)
+      response = get_from_api(http_url, 'text/plain', params, options)
       response.body
     end
 
-    def get_from_api(http_url, params, options)
+    def get_from_api(http_url, accept_headers, params, options)
       conn = set_connection_timeout(create_http_connection(http_url))
 
       response = conn.get do |req|
-        req.headers['Accept'] = 'application/json, text/plain'
+        req.headers['Accept'] = accept_headers
         req.options.params_encoder = Faraday::FlatParamsEncoder
         req.params = params.merge(options)
       end

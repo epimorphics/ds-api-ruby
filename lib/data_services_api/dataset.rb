@@ -61,7 +61,7 @@ module DataServicesApi
     def explain(query)
       sapi_query_params = SapiNTConverter.new(query.to_json).to_sapint_query
       explain_url = "#{data_api}/explain"
-      { sparql: service.api_get_text(explain_url, sapi_query_params) }
+      { sparql: service.api_get_raw(explain_url, sapi_query_params) }
     end
   end
 end
