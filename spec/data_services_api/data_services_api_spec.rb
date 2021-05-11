@@ -9,7 +9,7 @@ describe 'DataServicesAPI', 'the data services API' do
 
   it 'should be constructable with a default URL' do
     dsapi = DataServicesApi::Service .new
-    _(dsapi.url).must_match(%r{localhost:8080/dsapi})
+    _(dsapi.url).must_match(/localhost:8080/)
   end
 
   it 'should be constructable with a given URL' do
