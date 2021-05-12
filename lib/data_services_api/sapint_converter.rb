@@ -120,7 +120,9 @@ module DataServicesApi
     end
 
     def remove_prefix(value)
-      value.split(':')[1] unless value.match?(/^http/)
+      return value.split(':')[1] unless value.match?(/^http/)
+
+      value
     end
   end
 end
