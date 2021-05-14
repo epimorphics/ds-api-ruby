@@ -5,7 +5,7 @@ require './spec/minitest_helper'
 describe 'DataServiceApi::Dataset' do
   before do
     VCR.insert_cassette name, record: :new_episodes
-    @dataset = DataServicesApi::Service.new.dataset('ukhpi')
+    @dataset = DataServicesApi::Service.new(url: 'http://localhost:8080').dataset('ukhpi')
   end
 
   after do
