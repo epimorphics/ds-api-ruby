@@ -11,3 +11,5 @@ Add this line to your application's Gemfile:
 And then execute:
 
     $ bundle
+
+Also, an API URL needs to be provided for the Service class in order for the gem to work

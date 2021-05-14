@@ -3,12 +3,10 @@
 module DataServicesApi
   # Denotes the encapsulated DataServicesAPI service
   class Service
-    DEFAULT_URL = 'http://localhost:8080'
-
     attr_reader :url
 
     def initialize(config = {})
-      @url = config[:url] || DEFAULT_URL
+      @url = config[:url]
     end
 
     def datasets
