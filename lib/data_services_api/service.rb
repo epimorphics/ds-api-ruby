@@ -3,12 +3,10 @@
 module DataServicesApi
   # Denotes the encapsulated DataServicesAPI service
   class Service
-    DEFAULT_URL = 'http://localhost:8080/dsapi'
-
     attr_reader :url
 
     def initialize(config = {})
-      @url = config[:url] || DEFAULT_URL
+      @url = config[:url]
     end
 
     def datasets
@@ -18,12 +16,18 @@ module DataServicesApi
     def dataset(name)
       raise 'Dataset name is required' unless name
 
-      json = api_get_json("/dataset/#{name}")
-      json && Dataset.new(json, self)
+      endpoint = {
+        'data-api' => "#{@url}/landregistry/id/#{name}"
+      }
+      Dataset.new(endpoint, self)
     end
 
-    def api_get_json(api, options = {})
-      get_json(as_http_api(api), options)
+    def api_get_json(api, params, options = {})
+      get_json(as_http_api(api), params, options)
+    end
+
+    def api_get_raw(api, params, options = {})
+      get_raw(as_http_api(api), params, options)
     end
 
     def api_post_json(api, json)
@@ -33,17 +37,23 @@ module DataServicesApi
     private
 
     # Get parsed JSON from the given URL
-    def get_json(http_url, options)
-      response = get_from_api(http_url, options)
+    def get_json(http_url, params, options)
+      response = get_from_api(http_url, 'application/json', params, options)
       parse_json(response.body)
     end
 
-    def get_from_api(http_url, options)
+    def get_raw(http_url, params, options)
+      response = get_from_api(http_url, 'text/plain', params, options)
+      response.body
+    end
+
+    def get_from_api(http_url, accept_headers, params, options)
       conn = set_connection_timeout(create_http_connection(http_url))
 
       response = conn.get do |req|
-        req.headers['Accept'] = 'application/json'
-        req.params.merge! options
+        req.headers['Accept'] = accept_headers
+        req.options.params_encoder = Faraday::FlatParamsEncoder
+        req.params = params.merge(options)
       end
 
       ok?(response, http_url) && response
