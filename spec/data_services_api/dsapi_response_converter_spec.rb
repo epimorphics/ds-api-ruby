@@ -77,4 +77,10 @@ describe 'DataServicesApi::DSAPIResponseConverter' do
     expected_response = { 'ppd:newBuild' => dsapi_results_list[0]['ppd:newBuild'] }
     _(actual_response).must_equal expected_response
   end
+
+  it 'should convert SAPINT hash to DSAPI format' do
+    actual_response = resp_conv.send(:to_dsapi_json, 'propertyAddress', 'county' => 'SOMERSET')
+    expected_response = { 'ppd:propertyAddressCounty' => 'SOMERSET' }
+    _(actual_response).must_equal expected_response
+  end
 end

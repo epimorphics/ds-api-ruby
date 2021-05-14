@@ -10,8 +10,7 @@ module DataServicesApi
     def to_sapint_query
       @dsapi_query.reduce({}) do |res, (key, value)|
         json = sapint_query(key, value)
-        json ||= {} # this is a safeguard to avoid nil values
-        res.merge(json)
+        res.merge(json || {})
       end
     end
 
