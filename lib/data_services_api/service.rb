@@ -26,10 +26,6 @@ module DataServicesApi
       get_json(as_http_api(api), params, options)
     end
 
-    def api_get_raw(api, params, options = {})
-      get_raw(as_http_api(api), params, options)
-    end
-
     def api_post_json(api, json)
       post_json(as_http_api(api), json)
     end
@@ -40,11 +36,6 @@ module DataServicesApi
     def get_json(http_url, params, options)
       response = get_from_api(http_url, 'application/json', params, options)
       parse_json(response.body)
-    end
-
-    def get_raw(http_url, params, options)
-      response = get_from_api(http_url, 'text/plain', params, options)
-      response.body
     end
 
     def get_from_api(http_url, accept_headers, params, options)
