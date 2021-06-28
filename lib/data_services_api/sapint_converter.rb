@@ -33,8 +33,8 @@ module DataServicesApi
 
     def sort(values)
       values.map do |value|
-        sort_prop = value.key?('@up') ? "+#{value['@up']}" : "-#{value['@down']}"
-        ['_sort' => sort_prop]
+        sort_prop = value.key?('@up') ? "+#{remove_prefix(value['@up'])}" : "-#{remove_prefix(value['@down'])}"
+        ['_sort', sort_prop]
       end.to_h
     end
 
