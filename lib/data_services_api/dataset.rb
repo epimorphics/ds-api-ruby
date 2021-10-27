@@ -53,6 +53,8 @@ module DataServicesApi
       sapint_response = service.api_get_json(data_api, sapi_query_params)
       dataset_name = data_api[/[a-z]*$/]
       json_mode_compact = JSON.parse(query.to_json)['@json_mode'] == 'compact'
+      DSAPIResponseConverter.new(sapint_response, dataset_name,
+                                 json_mode_compact: json_mode_compact).to_dsapi_response
     end
 
     def describe(uri)

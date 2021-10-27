@@ -2,9 +2,10 @@
 
 module DataServicesApi
   class DSAPIResponseConverter
-    def initialize(sapint_response, data_api)
+    def initialize(sapint_response, dataset_name, json_mode_compact: false)
       @sapint_response = sapint_response
       @dataset_name = dataset_name
+      @json_mode_compact = json_mode_compact
     end
 
     # Converts SAPINT returned JSON format to DSAPI returned JSON format
