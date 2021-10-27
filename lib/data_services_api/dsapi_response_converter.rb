@@ -30,11 +30,12 @@ module DataServicesApi
       json_mode_complete(sapint_key, sapint_value)
     end
 
+    def json_mode_compact(sapint_key, sapint_value)
       return { sapint_key => sapint_value } if sapint_key == '@id'
-      return { "#{dataset_name}:#{sapint_key}" => sapint_value } unless sapint_value.is_a?(Hash)
+      return { "#{@dataset_name}:#{sapint_key}" => sapint_value } unless sapint_value.is_a?(Hash)
 
       sapint_value.map do |key, value|
-        ["#{dataset_name}:#{sapint_key}#{key == '@id' ? '' : key.capitalize}", value]
+        ["#{@dataset_name}:#{sapint_key}#{key == '@id' ? '' : key.capitalize}", value]
       end.to_h
     end
   end
