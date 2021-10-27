@@ -38,5 +38,19 @@ module DataServicesApi
         ["#{@dataset_name}:#{sapint_key}#{key == '@id' ? '' : key.capitalize}", value]
       end.to_h
     end
+
+    def json_mode_complete(sapint_key, sapint_value)
+      case sapint_key
+      when '@id'
+        return { sapint_key => sapint_value }
+      when 'refMonth'
+        return { "#{@dataset_name}:#{sapint_key}" => { '@value' => sapint_value } }
+      when 'refPeriodStart'
+        return { "#{@dataset_name}:#{sapint_key}" => [{ '@value' => sapint_value }] }
+      end
+      return { "#{@dataset_name}:#{sapint_key}" => [sapint_value] } unless sapint_value.is_a?(Hash)
+
+      { "#{@dataset_name}:#{sapint_key}" => sapint_value }
+    end
   end
 end
