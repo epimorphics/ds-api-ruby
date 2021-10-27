@@ -52,6 +52,7 @@ module DataServicesApi
       sapi_query_params = SapiNTConverter.new(query.to_json).to_sapint_query
       sapint_response = service.api_get_json(data_api, sapi_query_params)
       dataset_name = data_api[/[a-z]*$/]
+      json_mode_compact = JSON.parse(query.to_json)['@json_mode'] == 'compact'
     end
 
     def describe(uri)
