@@ -4,7 +4,7 @@ module DataServicesApi
   class DSAPIResponseConverter
     def initialize(sapint_response, data_api)
       @sapint_response = sapint_response
-      @data_api = data_api
+      @dataset_name = dataset_name
     end
 
     # Converts SAPINT returned JSON format to DSAPI returned JSON format
