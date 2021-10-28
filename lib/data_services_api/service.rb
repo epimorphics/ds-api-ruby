@@ -17,7 +17,8 @@ module DataServicesApi
       raise 'Dataset name is required' unless name
 
       endpoint = {
-        'data-api' => "#{@url}/landregistry/id/#{name}"
+        'data-api' => "#{@url}/landregistry/id/#{name}",
+        'dataset' => name
       }
       Dataset.new(endpoint, self)
     end
