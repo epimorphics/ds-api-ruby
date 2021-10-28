@@ -1,5 +1,9 @@
 # Changelog for DS API rubygem
 
+## 1.1.0 - 2021-10-28 (Bogdan)
+
+- Added support for `@json_mode: "complete"` query parameter
+
 ## 1.0.0 - 2021-06-14 (Bogdan)
 
 - Added a DSAPI to SapiNT converter, which converts all DSAPI queries
