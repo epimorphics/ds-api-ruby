@@ -62,7 +62,7 @@ describe 'DataServicesApi::DSAPIResponseConverter' do
           'items' => ppd_sapint_items
         },
         'ppd',
-        json_mode_compact: true
+        true
       )
     end
 
