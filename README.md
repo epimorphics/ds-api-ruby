@@ -17,14 +17,15 @@ bundle
 ```
 
 Also, an API URL needs to be provided for the Service class in order for the gem
-to work
+to work.
 
 ## Tests
 
-To run the tests, use:
+To run the tests you must set the environment variable `API_URL` to point to a
+running instance of a valid SAPINT API and run:
 
 ```sh
 rake test
 ```
 
-Also, a local SAPINT API must be running on port `8888` for these to work
+If `API_URL` is not set it will default to `http://localhost:8888`
