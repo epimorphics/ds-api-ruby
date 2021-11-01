@@ -23,8 +23,8 @@ module DataServicesApi
       end
     end
 
+    # Return different response formats based on the set JSON mode
     def to_dsapi_json(sapint_key, sapint_value)
-      # Return different response formats based on the set JSON mode
       return json_mode_compact(sapint_key, sapint_value) if @json_mode_compact
 
       json_mode_complete(sapint_key, sapint_value)
