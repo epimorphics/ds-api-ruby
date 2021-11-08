@@ -26,6 +26,10 @@ module DataServicesApi
       @json['data-api']
     end
 
+    def dataset
+      @json['dataset']
+    end
+
     def structure_api
       @json['structure-api']
     end
@@ -51,7 +55,8 @@ module DataServicesApi
     def query(query)
       sapi_query_params = SapiNTConverter.new(query.to_json).to_sapint_query
       sapint_response = service.api_get_json(data_api, sapi_query_params)
-      DSAPIResponseConverter.new(sapint_response, data_api).to_dsapi_response
+      json_mode_compact = query.terms['@json_mode'] == 'compact'
+      DSAPIResponseConverter.new(sapint_response, dataset, json_mode_compact).to_dsapi_response
     end
 
     def describe(uri)

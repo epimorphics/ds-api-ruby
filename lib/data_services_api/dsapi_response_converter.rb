@@ -2,9 +2,10 @@
 
 module DataServicesApi
   class DSAPIResponseConverter
-    def initialize(sapint_response, data_api)
+    def initialize(sapint_response, dataset_name, json_mode_compact = false)
       @sapint_response = sapint_response
-      @data_api = data_api
+      @dataset_name = dataset_name
+      @json_mode_compact = json_mode_compact
     end
 
     # Converts SAPINT returned JSON format to DSAPI returned JSON format
@@ -22,15 +23,34 @@ module DataServicesApi
       end
     end
 
+    # Return different response formats based on the set JSON mode
     def to_dsapi_json(sapint_key, sapint_value)
-      dataset_name = @data_api[/[a-z]*$/]
+      return json_mode_compact(sapint_key, sapint_value) if @json_mode_compact
 
+      json_mode_complete(sapint_key, sapint_value)
+    end
+
+    def json_mode_compact(sapint_key, sapint_value)
       return { sapint_key => sapint_value } if sapint_key == '@id'
-      return { "#{dataset_name}:#{sapint_key}" => sapint_value } unless sapint_value.is_a?(Hash)
+      return { "#{@dataset_name}:#{sapint_key}" => sapint_value } unless sapint_value.is_a?(Hash)
 
       sapint_value.map do |key, value|
-        ["#{dataset_name}:#{sapint_key}#{key == '@id' ? '' : key.capitalize}", value]
+        ["#{@dataset_name}:#{sapint_key}#{key == '@id' ? '' : key.capitalize}", value]
       end.to_h
+    end
+
+    def json_mode_complete(sapint_key, sapint_value)
+      case sapint_key
+      when '@id'
+        return { sapint_key => sapint_value }
+      when 'refMonth'
+        return { "#{@dataset_name}:#{sapint_key}" => { '@value' => sapint_value } }
+      when 'refPeriodStart'
+        return { "#{@dataset_name}:#{sapint_key}" => [{ '@value' => sapint_value }] }
+      end
+      return { "#{@dataset_name}:#{sapint_key}" => [sapint_value] } unless sapint_value.is_a?(Hash)
+
+      { "#{@dataset_name}:#{sapint_key}" => sapint_value }
     end
   end
 end
