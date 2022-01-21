@@ -7,8 +7,17 @@ AllCops:
   Exclude:
     - config/unicorn.rb
     - db/**
+  NewCops: enable
 
 Metrics/BlockLength:
   Enabled: true
   Exclude:
     - spec/**/*
+    - data_services_api.gemspec
+
+Style/Documentation:
+  Exclude:
+    - test/**/*
+
+Style/OptionalBooleanParameter:
+  Enabled: false

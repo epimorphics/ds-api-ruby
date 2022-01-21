@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
+# :nodoc:
 module DataServicesApi
+  # Adapter-pattern to present a response from SapiNT in the same JSON structure
+  # that the old DsAPI was using
   class DSAPIResponseConverter
     def initialize(sapint_response, dataset_name, json_mode_compact = false)
       @sapint_response = sapint_response
@@ -34,9 +37,9 @@ module DataServicesApi
       return { sapint_key => sapint_value } if sapint_key == '@id'
       return { "#{@dataset_name}:#{sapint_key}" => sapint_value } unless sapint_value.is_a?(Hash)
 
-      sapint_value.map do |key, value|
-        ["#{@dataset_name}:#{sapint_key}#{key == '@id' ? '' : key.capitalize}", value]
-      end.to_h
+      sapint_value.transform_keys do |key|
+        "#{@dataset_name}:#{sapint_key}#{key == '@id' ? '' : key.capitalize}"
+      end
     end
 
     def json_mode_complete(sapint_key, sapint_value)

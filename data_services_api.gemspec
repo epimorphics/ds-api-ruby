@@ -2,6 +2,7 @@
 
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
 require 'data_services_api/version'
 
 Gem::Specification.new do |spec|
@@ -12,6 +13,7 @@ Gem::Specification.new do |spec|
   spec.summary       = 'Ruby wrapper for Epimorphics data service API'
   spec.homepage      = 'https://github.com/epimorphics/data-API-ruby'
   spec.license       = ''
+  spec.required_ruby_version = '2.7'
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
@@ -31,5 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'minitest-vcr'
   spec.add_development_dependency 'mocha'
   spec.add_development_dependency 'rake'
+  spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'webmock'
+  spec.metadata['rubygems_mfa_required'] = 'true'
 end

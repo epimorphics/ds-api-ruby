@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module DataServicesApi
-  class SapiNTConverter
+  # Transformer to convert queries using the DsAPI query DSL
+  # into an equivalent SapiNT query URL string
+  class SapiNTConverter # rubocop:disable Metrics/ClassLength
     def initialize(dsapi_query)
       @dsapi_query = JSON.parse(dsapi_query)
     end
@@ -16,7 +18,7 @@ module DataServicesApi
 
     private
 
-    def sapint_query(key, value)
+    def sapint_query(key, value) # rubocop:disable Metrics/MethodLength
       case key
       when '@sort'
         sort(value)
@@ -32,10 +34,14 @@ module DataServicesApi
     end
 
     def sort(values)
-      values.map do |value|
-        sort_prop = value.key?('@up') ? "+#{remove_prefix(value['@up'])}" : "-#{remove_prefix(value['@down'])}"
+      values.to_h do |value|
+        sort_prop = if value.key?('@up')
+                      "+#{remove_prefix(value['@up'])}"
+                    else
+                      "-#{remove_prefix(value['@down'])}"
+                    end
         ['_sort', sort_prop]
-      end.to_h
+      end
     end
 
     def count(value)
@@ -66,7 +72,7 @@ module DataServicesApi
       relation(relation, attribute, relation_json)
     end
 
-    def relation(relation, attribute, json)
+    def relation(relation, attribute, json) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength
       case relation
       when '@eq'
         eq(attribute, json)
