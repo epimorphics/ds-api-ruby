@@ -1,13 +1,15 @@
-Layout/LineLength:
-  Max: 100
-  Exclude:
-    - spec/**/*
-
 AllCops:
+  TargetRubyVersion: 2.7
   Exclude:
     - config/unicorn.rb
     - db/**
   NewCops: enable
+
+
+Layout/LineLength:
+  Max: 100
+  Exclude:
+    - spec/**/*
 
 Metrics/BlockLength:
   Enabled: true
