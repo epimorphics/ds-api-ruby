@@ -4,7 +4,7 @@ module DataServicesApi
   # Encapsulates a single value coming back from the API
   class Value < Hash
     def initialize(base = {}, adds = {})
-      super
+      super()
 
       merge!(base)
         .merge!(adds)
