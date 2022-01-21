@@ -58,10 +58,10 @@ to work.
 ## Tests
 
 To run the tests you must set the environment variable `API_URL` to point to a
-running instance of a valid SAPINT API and run:
+running instance of a valid SAPINT API and run `rake test`:
 
 ```sh
-rake test
+API_URL=http://localhost:8080 rake test
 ```
 
 If `API_URL` is not set it will default to `http://localhost:8888`
