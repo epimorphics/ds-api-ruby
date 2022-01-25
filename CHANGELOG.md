@@ -1,5 +1,9 @@
 # Changelog for DS API rubygem
 
+## 1.1.1 - 2022-01-21
+
+- (Ian) Added GitHub actions to run Rubucop and Minitest tests in CI
+
 ## 1.1.0 - 2021-10-28 (Bogdan)
 
 - Added support for `@json_mode: "complete"` query parameter

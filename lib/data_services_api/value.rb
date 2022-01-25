@@ -4,25 +4,27 @@ module DataServicesApi
   # Encapsulates a single value coming back from the API
   class Value < Hash
     def initialize(base = {}, adds = {})
+      super()
+
       merge!(base)
         .merge!(adds)
       freeze
     end
 
     def value
-      self[:"@value"]
+      self[:@value]
     end
 
     def type
-      self[:"@type"]
+      self[:@type]
     end
 
     def uri
-      self[:"@id"]
+      self[:@id]
     end
 
     def with_uri(uri)
-      Value.new(self, "@id": uri)
+      Value.new(self, '@id': uri)
     end
 
     def self.uri(uri)
@@ -30,7 +32,7 @@ module DataServicesApi
     end
 
     def with_typed_value(value, type)
-      Value.new(self, "@value": value, "@type": type)
+      Value.new(self, '@value': value, '@type': type)
     end
 
     def with_year_month(year, month)

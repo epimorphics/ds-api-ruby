@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require './spec/minitest_helper'
+require './test/minitest_helper'
 
 describe 'DataServiceApi::Dataset' do
   before do
