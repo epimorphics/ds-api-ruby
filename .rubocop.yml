@@ -9,12 +9,12 @@ AllCops:
 Layout/LineLength:
   Max: 100
   Exclude:
-    - spec/**/*
+    - test/**/*
 
 Metrics/BlockLength:
   Enabled: true
   Exclude:
-    - spec/**/*
+    - test/**/*
     - data_services_api.gemspec
 
 Style/Documentation:
