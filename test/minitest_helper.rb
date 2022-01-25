@@ -2,6 +2,11 @@
 
 $LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 
+require 'simplecov'
+SimpleCov.start 'test_frameworks' do
+  enable_coverage :branch
+end
+
 require 'yajl'
 require 'minitest'
 require 'minitest/autorun'
