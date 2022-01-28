@@ -72,4 +72,40 @@ http_interactions:
       encoding: UTF-8
       string: '{"meta":{"@id":"http://localhost//landregistry/id/ukhpi?_limit=1&_sort=-refMonth&mineq-refMonth=2019-01&refRegion=http%3A%2F%2Flandregistry.data.gov.uk%2Fid%2Fregion%2Funited-kingdom","publisher":"","license":"","licenseName":"","comment":"","version":"0.1","hasFormat":["http://localhost//landregistry/id/ukhpi.rdf?_limit=1&_sort=-refMonth&mineq-refMonth=2019-01&refRegion=http%3A%2F%2Flandregistry.data.gov.uk%2Fid%2Fregion%2Funited-kingdom","http://localhost//landregistry/id/ukhpi.html?_limit=1&_sort=-refMonth&mineq-refMonth=2019-01&refRegion=http%3A%2F%2Flandregistry.data.gov.uk%2Fid%2Fregion%2Funited-kingdom","http://localhost//landregistry/id/ukhpi.geojson?_limit=1&_sort=-refMonth&mineq-refMonth=2019-01&refRegion=http%3A%2F%2Flandregistry.data.gov.uk%2Fid%2Fregion%2Funited-kingdom","http://localhost//landregistry/id/ukhpi.csv?_limit=1&_sort=-refMonth&mineq-refMonth=2019-01&refRegion=http%3A%2F%2Flandregistry.data.gov.uk%2Fid%2Fregion%2Funited-kingdom","http://localhost//landregistry/id/ukhpi.ttl?_limit=1&_sort=-refMonth&mineq-refMonth=2019-01&refRegion=http%3A%2F%2Flandregistry.data.gov.uk%2Fid%2Fregion%2Funited-kingdom","http://localhost//landregistry/id/ukhpi.json?_limit=1&_sort=-refMonth&mineq-refMonth=2019-01&refRegion=http%3A%2F%2Flandregistry.data.gov.uk%2Fid%2Fregion%2Funited-kingdom"],"limit":1},"items":[{"@id":"http://landregistry.data.gov.uk/data/ukhpi/region/united-kingdom/month/2021-08","refRegion":{"@id":"http://landregistry.data.gov.uk/id/region/united-kingdom"},"refMonth":"2021-08","averagePrice":264244,"averagePriceSA":260117,"housePriceIndex":138.59,"housePriceIndexSA":136.43,"percentageAnnualChange":10.56,"percentageChange":2.93,"averagePriceDetached":411649,"housePriceIndexDetached":143.07,"percentageChangeDetached":4.13,"percentageAnnualChangeDetached":13.08,"averagePriceSemiDetached":254115,"housePriceIndexSemiDetached":142.14,"percentageChangeSemiDetached":3.06,"percentageAnnualChangeSemiDetached":11.05,"averagePriceTerraced":214083,"housePriceIndexTerraced":139.07,"percentageChangeTerraced":3.02,"percentageAnnualChangeTerraced":9.94,"averagePriceFlatMaisonette":220756,"housePriceIndexFlatMaisonette":127.46,"percentageChangeFlatMaisonette":0.89,"percentageAnnualChangeFlatMaisonette":7.27,"refPeriodStart":"2021-08-01","refPeriodDuration":1}]}'
   recorded_at: Thu, 28 Oct 2021 11:37:18 GMT
+- request:
+    method: get
+    uri: http://localhost:8080/landregistry/id/ukhpi?_limit=1&_sort=-refMonth&mineq-refMonth=2019-01&refRegion=http://landregistry.data.gov.uk/id/region/united-kingdom
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.9.3
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Sleuth-Trace-Id:
+      - 5dee87b14b0f93ef
+      Sleuth-Span-Id:
+      - 5dee87b14b0f93ef
+      Vary:
+      - Accept
+      Cache-Control:
+      - max-age=0
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '2309'
+      Date:
+      - Tue, 25 Jan 2022 17:56:22 GMT
+    body:
+      encoding: UTF-8
+      string: '{"meta":{"@id":"http://localhost//landregistry/id/ukhpi?_limit=1&_sort=-refMonth&mineq-refMonth=2019-01&refRegion=http%3A%2F%2Flandregistry.data.gov.uk%2Fid%2Fregion%2Funited-kingdom","publisher":"","license":"","licenseName":"","comment":"","version":"0.1","hasFormat":["http://localhost//landregistry/id/ukhpi.rdf?_limit=1&_sort=-refMonth&mineq-refMonth=2019-01&refRegion=http%3A%2F%2Flandregistry.data.gov.uk%2Fid%2Fregion%2Funited-kingdom","http://localhost//landregistry/id/ukhpi.html?_limit=1&_sort=-refMonth&mineq-refMonth=2019-01&refRegion=http%3A%2F%2Flandregistry.data.gov.uk%2Fid%2Fregion%2Funited-kingdom","http://localhost//landregistry/id/ukhpi.geojson?_limit=1&_sort=-refMonth&mineq-refMonth=2019-01&refRegion=http%3A%2F%2Flandregistry.data.gov.uk%2Fid%2Fregion%2Funited-kingdom","http://localhost//landregistry/id/ukhpi.csv?_limit=1&_sort=-refMonth&mineq-refMonth=2019-01&refRegion=http%3A%2F%2Flandregistry.data.gov.uk%2Fid%2Fregion%2Funited-kingdom","http://localhost//landregistry/id/ukhpi.ttl?_limit=1&_sort=-refMonth&mineq-refMonth=2019-01&refRegion=http%3A%2F%2Flandregistry.data.gov.uk%2Fid%2Fregion%2Funited-kingdom","http://localhost//landregistry/id/ukhpi.json?_limit=1&_sort=-refMonth&mineq-refMonth=2019-01&refRegion=http%3A%2F%2Flandregistry.data.gov.uk%2Fid%2Fregion%2Funited-kingdom"],"limit":1},"items":[{"@id":"http://landregistry.data.gov.uk/data/ukhpi/region/united-kingdom/month/2021-10","refRegion":{"@id":"http://landregistry.data.gov.uk/id/region/united-kingdom"},"refMonth":"2021-10","averagePrice":268349,"averagePriceSA":264786,"housePriceIndex":140.74,"housePriceIndexSA":138.87,"percentageAnnualChange":10.17,"percentageChange":-1.11,"averagePriceDetached":425121,"housePriceIndexDetached":147.75,"percentageChangeDetached":0.75,"percentageAnnualChangeDetached":13.99,"averagePriceSemiDetached":256537,"housePriceIndexSemiDetached":143.49,"percentageChangeSemiDetached":-1.64,"percentageAnnualChangeSemiDetached":10.39,"averagePriceTerraced":216481,"housePriceIndexTerraced":140.62,"percentageChangeTerraced":-2.88,"percentageAnnualChangeTerraced":8.79,"averagePriceFlatMaisonette":222381,"housePriceIndexFlatMaisonette":128.40,"percentageChangeFlatMaisonette":-0.17,"percentageAnnualChangeFlatMaisonette":6.63,"refPeriodStart":"2021-10-01","refPeriodDuration":1}]}'
+  recorded_at: Tue, 25 Jan 2022 17:56:23 GMT
 recorded_with: VCR 6.0.0

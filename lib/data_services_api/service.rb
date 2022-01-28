@@ -2,10 +2,13 @@
 
 module DataServicesApi
   # Denotes the encapsulated DataServicesAPI service
-  class Service
-    attr_reader :url
+  class Service # rubocop:disable Metrics/ClassLength
+    attr_reader :instrumenter, :logger, :parser, :url
 
     def initialize(config = {})
+      @instrumenter = config[:instrumenter] || (in_rails? && ActiveSupport::Notifications)
+      @logger = config[:logger] || (in_rails? && Rails.logger)
+      @parser = Yajl::Parser.new
       @url = config[:url]
     end
 
@@ -39,7 +42,7 @@ module DataServicesApi
       parse_json(response.body)
     end
 
-    def get_from_api(http_url, accept_headers, params, options)
+    def get_from_api(http_url, accept_headers, params, options) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       conn = set_connection_timeout(create_http_connection(http_url))
 
       response = conn.get do |req|
@@ -48,7 +51,15 @@ module DataServicesApi
         req.params = params.merge(options)
       end
 
+      instrument_response(response)
+
       ok?(response, http_url) && response
+    rescue ServiceException => e
+      instrument_service_exception(e)
+      throw e
+    rescue Faraday::ConnectionFailed => e
+      instrument_connection_failure(e)
+      throw e
     end
 
     # Parse the given JSON string into a data structure. Throws an exception if
@@ -88,15 +99,12 @@ module DataServicesApi
 
     def create_http_connection(http_url)
       Faraday.new(url: http_url) do |faraday|
-        faraday.request  :url_encoded
-        faraday.use      FaradayMiddleware::FollowRedirects
-
-        if defined?(Rails) && Rails.respond_to?(:env) && Rails.env.development?
-          faraday.response :logger, Rails.logger
-        end
+        faraday.request(:url_encoded)
+        faraday.use(FaradayMiddleware::FollowRedirects)
+        faraday.response(:logger, logger) if logger
 
         # setting the adapter must be the final step, otherwise get a warning from Faraday
-        faraday.adapter  :net_http
+        faraday.adapter(:net_http)
       end
     end
 
@@ -118,20 +126,31 @@ module DataServicesApi
       api.start_with?('http:') ? api : "#{url}#{api}"
     end
 
-    protected
-
-    def parser
-      @parser ||= Yajl::Parser.new
-    end
-
     def report_json_failure(json)
-      if defined?(Rails)
+      if in_rails?
         msg = 'JSON result was not parsed correctly (no temp file saved)'
         Rails.logger.info(msg)
         throw msg
       else
         throw "JSON result was not parsed correctly: #{json.slice(0, 1000)}"
       end
+    end
+
+    def instrument_response(response)
+      instrumenter&.instrument('response.data_api', response: response)
+    end
+
+    def instrument_connection_failure(exception)
+      instrumenter&.instrument('connection_failure.data_api', exception: exception)
+    end
+
+    def instrument_service_exception(exception)
+      instrumenter&.instrument('service_exception.data_api', exception: exception)
+    end
+
+    # Return true if we're currently running in a Rails environment
+    def in_rails?
+      defined?(Rails)
     end
   end
 end

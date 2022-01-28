@@ -15,3 +15,5 @@ jobs:
       run: bundle install
     - name: Run tests
       run: rake test
+      env:
+        API_URL: http://localhost:8080

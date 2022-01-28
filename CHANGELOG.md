@@ -1,5 +1,10 @@
 # Changelog for DS API rubygem
 
+## 1.2.0 - 2022-01-27
+
+- (Ian) Added `ActiveSupport` instrumentation calls to allow collecting
+  of metrics on API calls
+
 ## 1.1.1 - 2022-01-21
 
 - (Ian) Added GitHub actions to run Rubucop and Minitest tests in CI

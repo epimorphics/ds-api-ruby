@@ -19,6 +19,7 @@ Bundler.require(:default, :development, :test)
 require 'faraday'
 require 'faraday_middleware'
 require 'byebug'
+require 'mocha/minitest'
 
 VCR.configure do |c|
   c.cassette_library_dir = 'fixtures/vcr_cassettes'
