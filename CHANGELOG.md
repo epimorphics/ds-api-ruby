@@ -1,5 +1,9 @@
 # Changelog for DS API rubygem
 
+## 1.2.1 - 2022-01-28
+
+- (Ian) Fix minimum Ruby version constraint in gemspec.
+
 ## 1.2.0 - 2022-01-27
 
 - (Ian) Added `ActiveSupport` instrumentation calls to allow collecting
