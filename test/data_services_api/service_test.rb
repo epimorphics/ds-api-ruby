@@ -95,7 +95,7 @@ describe 'DataServicesAPI::Service', vcr: true do
     _ do
       DataServicesApi::Service
         .new(url: api_url, instrumenter: instrumenter)
-        .api_get_json("#{api_url}/ceci/nest/pa/un/page", { '_limit' => 1 })
+        .api_get_json("#{api_url}/ceci/nest/pas/une/page", { '_limit' => 1 })
     end.must_raise
 
     instrumentations = instrumenter.instrumentations
