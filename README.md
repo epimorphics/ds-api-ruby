@@ -1,4 +1,13 @@
-# Epimorphics Data Services API gem
+# Deprecated
+
+This version of this supporting gem is being frozen to maintain legacy support
+for the existing HMLR infrastructure. New development will be taking place in
+the new repo: [data services
+API](https://github.com/epimorphics/data_services_api)
+
+**Note** Please use the new repo for new changes and issues
+
+## Epimorphics Data Services API gem
 
 This gem provides a Ruby API for back-end data services used in the HMLR
 linked data applications. Specifically, it allows a simple expression language
